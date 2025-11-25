@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { io, Socket } from "socket.io-client";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api";
-const WS_URL = process.env.NEXT_PUBLIC_WS_URL || "http://localhost:3000";
+const WS_URL = process.env.NEXT_PUBLIC_WS_URL || "";
 
 interface Mensaje {
   id_mensaje: number;
@@ -33,17 +33,19 @@ export default function MensajesPage() {
   const [contactoSeleccionado, setContactoSeleccionado] = useState<
     string | null
   >(null);
+  const [telefonoSeleccionado, setTelefonoSeleccionado] = useState<string | null>(null);
   const [nuevoMensaje, setNuevoMensaje] = useState("");
   const [busqueda, setBusqueda] = useState("");
   const [socket, setSocket] = useState<Socket | null>(null);
   const mensajesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Conectar WebSocket
+    if (!WS_URL) {
+      cargarContactos();
+      return;
+    }
     const token = localStorage.getItem("token");
-    const newSocket = io(WS_URL, {
-      auth: { token },
-    });
+    const newSocket = io(WS_URL, { auth: { token } });
 
     newSocket.on("connect", () => {
       console.log("✅ WebSocket conectado");
@@ -51,22 +53,19 @@ export default function MensajesPage() {
 
     newSocket.on("nuevo-mensaje", (mensaje: Mensaje) => {
       console.log("📩 Nuevo mensaje recibido:", mensaje);
-
-      // Si es del contacto actual, agregarlo a la conversación
-      if (mensaje.telefono === contactoSeleccionado) {
+      if ((mensaje as any).conversation_id === contactoSeleccionado || mensaje.telefono === telefonoSeleccionado) {
         setMensajes((prev) => [...prev, mensaje]);
       }
       cargarContactos();
     });
 
     setSocket(newSocket);
-
     cargarContactos();
 
     return () => {
       newSocket.disconnect();
     };
-  }, [contactoSeleccionado]);
+  }, [contactoSeleccionado, telefonoSeleccionado]);
 
   useEffect(() => {
     // Scroll automático al último mensaje
@@ -101,6 +100,7 @@ export default function MensajesPage() {
       if (response.data.success) {
         setMensajes(response.data.mensajes);
         setContactoSeleccionado(telefono);
+        setTelefonoSeleccionado(telefono);
       }
     } catch (error) {
       console.error("Error al cargar conversación:", error);

@@ -49,7 +49,15 @@ export default function AdminLayout({
     return null;
   }
 
-  const menuItems = [
+  type MenuItem = {
+    name: string;
+    icon: any;
+    href: string;
+    roles: string[];
+    className?: string;
+  };
+
+  const menuItems: MenuItem[] = [
     {
       name: "Dashboard",
       icon: LayoutDashboard,
@@ -65,8 +73,13 @@ export default function AdminLayout({
     {
       name: "Citas",
       icon: Calendar,
-      className: "disabled",
       href: "/admin/citas",
+      roles: ["ADMIN", "OPERADOR"],
+    },
+    {
+      name: "Pacientes",
+      icon: Users,
+      href: "/admin/pacientes",
       roles: ["ADMIN", "OPERADOR"],
     },
     {
@@ -101,8 +114,9 @@ export default function AdminLayout({
     },
   ];
 
+  const userRole = (user?.rol || "").toUpperCase();
   const filteredMenuItems = menuItems.filter((item) =>
-    item.roles.includes(user?.rol || "")
+    item.roles.includes(userRole)
   );
 
   const isActive = (href: string) => {
@@ -207,9 +221,8 @@ export default function AdminLayout({
       </main>
 
       {/* FOOTER */}
-      <footer className="bg-gray-800 border-t shadow-sm fixed bottom-0 left-0 right-0 z-30 h-16 flex items-center justify-center text-sm text-gray-500">
-        © {new Date().getFullYear()} Adalberto Pedroza — Sistema de Citas
-        Médicas
+      <footer className="bg-gray-800 border-t shadow-sm fixed bottom-0 left-0 right-0 z-30 h-16 flex items-center justify-center text-sm text-gray-300">
+        © 2025 SchedBot Solutions - Sistema Administracion de Citas
       </footer>
     </div>
   );

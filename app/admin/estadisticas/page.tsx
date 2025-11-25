@@ -1,6 +1,6 @@
 "use client";
 
-import axios from "axios";
+import api, { getAppointments, listPatients, obtenerSolicitudesPendientes } from "@/libs/api";
 import {
   AlertCircle,
   Calendar,
@@ -12,11 +12,12 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api";
 
 interface Estadisticas {
   citasHoy: number;
   citasSemana: number;
+  citasAtencionHoy: number;
+  citasAtencionSemana: number;
   mensajesHoy: number;
   solicitudesPendientes: number;
   totalPacientes: number;
@@ -26,11 +27,14 @@ export default function DashboardPage() {
   const [stats, setStats] = useState<Estadisticas>({
     citasHoy: 0,
     citasSemana: 0,
+    citasAtencionHoy: 0,
+    citasAtencionSemana: 0,
     mensajesHoy: 0,
     solicitudesPendientes: 0,
     totalPacientes: 0,
   });
   const [loading, setLoading] = useState(true);
+  const [viewMode, setViewMode] = useState<"todas" | "agendadas" | "atencion">("todas");
 
   useEffect(() => {
     cargarEstadisticas();
@@ -38,34 +42,60 @@ export default function DashboardPage() {
 
   const cargarEstadisticas = async () => {
     try {
-      const token = localStorage.getItem("token");
-      const citas = await axios.get(`${API_URL}/citas`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const mensajes = await axios.get(`${API_URL}/mensajes`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const solicitudes = await axios.get(`${API_URL}/solicitudes`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const today = new Date();
+      const pad = (n: number) => String(n).padStart(2, "0");
+      const fmt = (d: Date) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+      const startOfWeek = new Date(today);
+      const day = today.getDay();
+      const diffToMonday = (day === 0 ? -6 : 1) - day;
+      startOfWeek.setDate(today.getDate() + diffToMonday);
+      const endOfWeek = new Date(startOfWeek);
+      endOfWeek.setDate(startOfWeek.getDate() + 6);
 
-      if (
-        citas.data.success &&
-        mensajes.data.success &&
-        solicitudes.data.success
-      ) {
-        setStats({
-          citasHoy: Array.isArray(citas.data.data.hoy)
-            ? citas.data.data.hoy.length
-            : typeof citas.data.data.hoy === "number"
-            ? citas.data.data.hoy
-            : 0,
-          citasSemana: citas.data.data.semana,
-          mensajesHoy: mensajes.data.data.hoy,
-          solicitudesPendientes: solicitudes.data.data.pendientes,
-          totalPacientes: solicitudes.data.data.total,
-        });
-      }
+      const countAppointmentsByCreated = async (from: Date, to: Date) => {
+        try {
+          const r = await getAppointments({ created_from: fmt(from), created_to: fmt(to), page: 1, per_page: 1 });
+          return (r?.meta?.total ?? (Array.isArray(r?.data) ? r.data.length : 0)) as number;
+        } catch {
+          try {
+            const r2 = await getAppointments({ from: fmt(from), to: fmt(to), page: 1, per_page: 1 });
+            return (r2?.meta?.total ?? (Array.isArray(r2?.data) ? r2.data.length : 0)) as number;
+          } catch {
+            return 0;
+          }
+        }
+      };
+
+      const settled = await Promise.allSettled([
+        listPatients({ page: 1, per_page: 1 }),
+        api.get(`/mensajes`),
+        obtenerSolicitudesPendientes(),
+      ]);
+
+      const settledAppointments = await Promise.allSettled([
+        getAppointments({ from: fmt(today), to: fmt(today), page: 1, per_page: 1 }),
+        getAppointments({ from: fmt(startOfWeek), to: fmt(endOfWeek), page: 1, per_page: 1 }),
+      ]);
+
+      const citasHoy = await countAppointmentsByCreated(today, today);
+      const citasSemana = await countAppointmentsByCreated(startOfWeek, endOfWeek);
+      const citasAtencionHoy = settledAppointments[0].status === "fulfilled"
+        ? ((settledAppointments[0].value?.meta?.total ?? (Array.isArray(settledAppointments[0].value?.data) ? settledAppointments[0].value.data.length : 0)) as number)
+        : 0;
+      const citasAtencionSemana = settledAppointments[1].status === "fulfilled"
+        ? ((settledAppointments[1].value?.meta?.total ?? (Array.isArray(settledAppointments[1].value?.data) ? settledAppointments[1].value.data.length : 0)) as number)
+        : 0;
+      const totalPacientes = settled[0].status === "fulfilled"
+        ? ((settled[0].value?.meta?.total ?? (Array.isArray(settled[0].value?.data) ? settled[0].value.data.length : 0)) as number)
+        : 0;
+      const mensajesHoy = settled[1].status === "fulfilled"
+        ? ((settled[1].value?.data?.data?.hoy ?? 0) as number)
+        : 0;
+      const solicitudesPendientes = settled[2].status === "fulfilled" && Array.isArray(settled[2].value?.solicitudes)
+        ? settled[2].value.solicitudes.length
+        : 0;
+
+      setStats({ citasHoy, citasSemana, citasAtencionHoy, citasAtencionSemana, mensajesHoy, solicitudesPendientes, totalPacientes });
     } catch (error) {
       console.error("Error al cargar estadísticas:", error);
     } finally {
@@ -73,7 +103,7 @@ export default function DashboardPage() {
     }
   };
 
-  const cards = [
+  const appointmentCardsAll = [
     {
       title: "Citas Hoy",
       value: stats.citasHoy,
@@ -83,13 +113,36 @@ export default function DashboardPage() {
       bgColor: "bg-blue-50",
     },
     {
-      title: "Citas Esta Semana",
+      title: "Citas Esta Semana (Agendadas)",
       value: stats.citasSemana,
       icon: TrendingUp,
       color: "bg-green-500",
       textColor: "text-green-600",
       bgColor: "bg-green-50",
     },
+    {
+      title: "Atención Hoy (Fecha Cita)",
+      value: stats.citasAtencionHoy,
+      icon: Calendar,
+      color: "bg-amber-500",
+      textColor: "text-amber-600",
+      bgColor: "bg-amber-50",
+    },
+    {
+      title: "Atención Semana (Fecha Cita)",
+      value: stats.citasAtencionSemana,
+      icon: TrendingUp,
+      color: "bg-teal-500",
+      textColor: "text-teal-600",
+      bgColor: "bg-teal-50",
+    },
+  ];
+  const appointmentCards = viewMode === "todas"
+    ? appointmentCardsAll
+    : viewMode === "agendadas"
+    ? appointmentCardsAll.slice(0, 2)
+    : appointmentCardsAll.slice(2);
+  const miscCards = [
     {
       title: "Mensajes Hoy",
       value: stats.mensajesHoy,
@@ -115,6 +168,7 @@ export default function DashboardPage() {
       bgColor: "bg-indigo-50",
     },
   ];
+  const cards = [...appointmentCards, ...miscCards];
 
   if (loading) {
     return (
@@ -137,6 +191,13 @@ export default function DashboardPage() {
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-800 mb-2">Dashboard</h1>
         <p className="text-gray-600">Resumen de actividad del sistema</p>
+      </div>
+
+      {/* Filtros de Vista */}
+      <div className="flex items-center justify-end mb-4 gap-2">
+        <button onClick={() => setViewMode("todas")} className={`px-3 py-1 rounded border ${viewMode === "todas" ? "bg-blue-600 text-white border-blue-600" : "bg-white text-gray-700"}`}>Todas</button>
+        <button onClick={() => setViewMode("agendadas")} className={`px-3 py-1 rounded border ${viewMode === "agendadas" ? "bg-blue-600 text-white border-blue-600" : "bg-white text-gray-700"}`}>Agendadas</button>
+        <button onClick={() => setViewMode("atencion")} className={`px-3 py-1 rounded border ${viewMode === "atencion" ? "bg-blue-600 text-white border-blue-600" : "bg-white text-gray-700"}`}>Atención</button>
       </div>
 
       {/* Stats Cards */}

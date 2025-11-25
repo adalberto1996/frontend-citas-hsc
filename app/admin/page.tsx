@@ -14,8 +14,8 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { io, Socket } from "socket.io-client";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api";
-const WS_URL = process.env.NEXT_PUBLIC_WS_URL || "http://localhost:3000";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api";
+const WS_URL = process.env.NEXT_PUBLIC_WS_URL || "";
 
 interface Mensaje {
   id_mensaje: number;
@@ -56,35 +56,35 @@ export default function MensajesPage() {
   const [mostrarPlantillas, setMostrarPlantillas] = useState(false);
   const mensajesEndRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  //useEffect(() => {
     // Conectar WebSocket
-    const token = localStorage.getItem("token");
-    const newSocket = io(WS_URL, {
-      auth: { token },
-    });
+   // const token = localStorage.getItem("token");
+   // const newSocket = io(WS_URL, {
+     // auth: { token },
+   // });
 
-    newSocket.on("connect", () => {
-      console.log("✅ WebSocket conectado");
-    });
+   // newSocket.on("connect", () => {
+   //   console.log("✅ WebSocket conectado");
+   // });
 
-    newSocket.on("nuevo-mensaje", (mensaje: Mensaje) => {
-      console.log("📩 Nuevo mensaje recibido:", mensaje);
+   // newSocket.on("nuevo-mensaje", (mensaje: Mensaje) => {
+    //  console.log("📩 Nuevo mensaje recibido:", mensaje);
 
-      if (mensaje.telefono === contactoSeleccionado) {
-        setMensajes((prev) => [...prev, mensaje]);
-      }
+     // if (mensaje.telefono === contactoSeleccionado) {
+      //  setMensajes((prev) => [...prev, mensaje]);
+     // }
 
-      cargarContactos();
-    });
+    //  cargarContactos();
+   // });
 
-    setSocket(newSocket);
-    cargarContactos();
-    cargarPlantillas();
+//setSocket(newSocket);
+   // cargarContactos();
+   // cargarPlantillas();
 
-    return () => {
-      newSocket.disconnect();
-    };
-  }, [contactoSeleccionado]);
+    //return () => {
+    //  newSocket.disconnect();
+  //  };
+  //}, [contactoSeleccionado]);
 
   useEffect(() => {
     mensajesEndRef.current?.scrollIntoView({ behavior: "smooth" });

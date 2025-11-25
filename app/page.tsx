@@ -402,8 +402,7 @@ export default function Home() {
                 desarrollador.
               </p>
               <p className="text-xs text-gray-500 mt-2">
-                © {new Date().getFullYear()} Adalberto Pedroza - Todos los
-                derechos reservados
+                © 2025 SchedBot Solutions - Sistema Administracion de Citas
               </p>
             </div>
           </div>

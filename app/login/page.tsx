@@ -2,11 +2,11 @@
 "use client";
 
 import { useAuth } from "@/contexts/AuthContext";
-import { AlertCircle, Loader2, Lock, User } from "lucide-react";
+import { AlertCircle, Loader2, Lock, Mail } from "lucide-react";
 import { useState } from "react";
 
 export default function LoginPage() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -18,7 +18,7 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      await login(username, password);
+      await login(email, password);
     } catch (err: any) {
       setError(err.message || "Credenciales inválidas");
     } finally {
@@ -52,16 +52,16 @@ export default function LoginPage() {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Usuario
+                Correo electrónico
               </label>
               <div className="relative">
-                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <input
-                  type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="w-full pl-10 pr-4 py-3 text-black border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="Ingresa tu usuario"
+                  placeholder="Ingresa tu correo"
                   required
                 />
               </div>
@@ -103,7 +103,7 @@ export default function LoginPage() {
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600">Credenciales por defecto:</p>
             <p className="text-xs text-gray-500 mt-1">
-              Usuario: <strong>admin</strong> / Contraseña:{" "}
+              Correo: <strong>admin@example.com</strong> / Contraseña: {""}
               <strong>Admin123</strong>
             </p>
           </div>
@@ -111,7 +111,7 @@ export default function LoginPage() {
 
         {/* Footer */}
         <div className="text-center mt-6 text-white text-sm">
-          <p>© 2025 Hospital - Sistema de Citas</p>
+          <p>© 2025 SchedBot Solutions - Sistema Administracion de Citas</p>
         </div>
       </div>
     </div>

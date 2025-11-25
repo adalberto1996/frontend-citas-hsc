@@ -3,25 +3,26 @@
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { createContext, useContext, useEffect, useState } from "react";
+import api from "@/libs/api";
 
 interface User {
   id: number;
-  username: string;
   nombre: string;
+  email?: string;
   rol: string;
 }
 
 interface AuthContextType {
   user: User | null;
   loading: boolean;
-  login: (username: string, password: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<void>;
   logout: () => void;
   isAuthenticated: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api";
+
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
@@ -46,37 +47,45 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
 
     try {
-      const response = await axios.post(`${API_URL}/auth/validate`, { token });
-
-      if (response.data.data.valid) {
-        setUser(response.data.data.user);
+      await api.get("/backoffice/patients", { params: { limit: 1 } });
+      const saved = localStorage.getItem("user");
+      if (saved) {
+        const parsed: User = JSON.parse(saved);
+        parsed.rol = (parsed.rol || "").toUpperCase();
+        setUser(parsed);
       } else {
-        localStorage.removeItem("token");
+        setUser(null);
       }
     } catch (error) {
       localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      setUser(null);
     } finally {
       setLoading(false);
     }
   };
 
-  const login = async (username: string, password: string) => {
+  const login = async (email: string, password: string) => {
     try {
-      const response = await axios.post(`${API_URL}/auth/login`, {
-        username,
-        password,
-      });
-
-      if (response.data.success) {
-        localStorage.setItem("token", response.data.data.access_token);
-        setUser(response.data.data.user);
+      const response = await api.post("/auth/login", { email, password });
+      const { access_token, user } = response.data || {};
+      if (access_token && user) {
+        localStorage.setItem("token", access_token);
+        const mappedUser: User = {
+          id: Number(user.id),
+          nombre: user.name,
+          email: user.email,
+          rol: (user.role || "").toUpperCase(),
+        };
+        localStorage.setItem("user", JSON.stringify(mappedUser));
+        setUser(mappedUser);
         router.push("/admin");
+      } else {
+        throw new Error("Respuesta de login inválida");
       }
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
-        throw new Error(
-          error.response?.data?.message || "Error al iniciar sesión"
-        );
+        throw new Error(error.response?.data?.message || "Error al iniciar sesión");
       }
       throw new Error("Error al iniciar sesión");
     }
@@ -84,6 +93,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const logout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
     setUser(null);
     router.push("/login");
   };

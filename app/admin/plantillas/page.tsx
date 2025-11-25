@@ -7,7 +7,7 @@ import axios from "axios";
 import { Copy, Edit, FileText, Plus, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api";
 
 export default function PlantillasPage() {
   const [plantillas, setPlantillas] = useState<Plantilla[]>([]);
