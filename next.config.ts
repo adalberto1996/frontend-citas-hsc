@@ -2,16 +2,14 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   // Habilitar Turbopack en dev
   output: "standalone",
-  experimental: {
-    turbo: {
-      // Configuración de Turbopack si es necesaria
-    },
+  turbopack: {
+    // Configuración de Turbopack si es necesaria
   },
 
   // Variables de entorno públicas
   env: {
     NEXT_PUBLIC_API_URL:
-      process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api",
+      process.env.NEXT_PUBLIC_API_URL || "http://localhost:16000/api",
     NEXT_PUBLIC_WS_URL:
       process.env.NEXT_PUBLIC_WS_URL || "http://localhost:3000",
   },

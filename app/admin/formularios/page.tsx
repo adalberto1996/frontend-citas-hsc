@@ -1,11 +1,10 @@
 "use client";
 
 import Plantilla from "@/libs/interface";
-import axios from "axios";
+import api from "@/libs/api";
 import { FileText, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api";
 
 export default function FormulariosPage() {
   const [plantillas, setPlantillas] = useState<Plantilla[]>([]);
@@ -18,7 +17,7 @@ export default function FormulariosPage() {
   const cargarPlantillas = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get(`${API_URL}/mensajes/plantillas`, {
+      const response = await api.get(`/mensajes/plantillas`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -43,7 +42,7 @@ export default function FormulariosPage() {
             Gestiona urls para la toma de los datos de los pacientes
           </p>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+        <button className="flex items-center gap-2 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700">
           <Plus className="w-5 h-5" />
           Nueva Plantilla
         </button>
@@ -60,7 +59,7 @@ export default function FormulariosPage() {
                 {formularios.map((formulario) => (
                   <div
                     key={formulario.id_formulario}
-                    className="border border-gray-200 rounded-lg p-4 hover:border-blue-500 transition-colors"
+                    className="border border-gray-200 rounded-lg p-4 hover:border-teal-500 transition-colors"
                   >
                     <div className="flex justify-between items-start">
                       <h3 className="text-lg font-semibold text-gray-700">

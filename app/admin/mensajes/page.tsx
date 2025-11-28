@@ -1,12 +1,11 @@
 "use client";
 
 import ProtectedRoute from "@/components/ProtectedRoute";
-import axios from "axios";
+import api from "@/libs/api";
 import { Clock, MessageCircle, Phone, Search, Send } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { io, Socket } from "socket.io-client";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api";
 const WS_URL = process.env.NEXT_PUBLIC_WS_URL || "";
 
 interface Mensaje {
@@ -75,7 +74,7 @@ export default function MensajesPage() {
   const cargarContactos = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get(`${API_URL}/mensajes/contactos`, {
+      const response = await api.get(`/mensajes/contactos`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -90,8 +89,8 @@ export default function MensajesPage() {
   const cargarConversacion = async (telefono: string) => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get(
-        `${API_URL}/mensajes/conversacion/${telefono}`,
+      const response = await api.get(
+        `/mensajes/conversacion/${telefono}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -112,8 +111,8 @@ export default function MensajesPage() {
 
     try {
       const token = localStorage.getItem("token");
-      await axios.post(
-        `${API_URL}/whatsapp/enviar-mensaje`,
+      await api.post(
+        `/whatsapp/enviar-mensaje`,
         {
           telefono: contactoSeleccionado,
           mensaje: nuevoMensaje,
@@ -180,7 +179,7 @@ export default function MensajesPage() {
         {/* Lista de contactos */}
         <div className="w-96 bg-white border-r flex flex-col">
           {/* Header */}
-          <div className="p-4 bg-blue-600 text-white">
+          <div className="p-4 bg-teal-600 text-white">
             <h1 className="text-xl font-bold flex items-center gap-2">
               <MessageCircle className="w-6 h-6" />
               Mensajes WhatsApp
@@ -196,7 +195,7 @@ export default function MensajesPage() {
                 placeholder="Buscar contacto..."
                 value={busqueda}
                 onChange={(e) => setBusqueda(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-700 focus:border-transparent"
               />
             </div>
           </div>
@@ -215,12 +214,12 @@ export default function MensajesPage() {
                   onClick={() => cargarConversacion(contacto.telefono)}
                   className={`p-4 border-b cursor-pointer hover:bg-gray-50 transition-colors ${
                     contactoSeleccionado === contacto.telefono
-                      ? "bg-blue-50"
+                      ? "bg-teal-50"
                       : ""
                   }`}
                 >
                   <div className="flex items-start gap-3">
-                    <div className="flex-shrink-0 w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white font-semibold">
+                    <div className="flex-shrink-0 w-12 h-12 bg-teal-600 rounded-full flex items-center justify-center text-white font-semibold">
                       {contacto.nombre_completo?.[0] || contacto.telefono[0]}
                     </div>
                     <div className="flex-1 min-w-0">
@@ -237,7 +236,7 @@ export default function MensajesPage() {
                           {contacto.ultimo_mensaje}
                         </p>
                         {contacto.mensajes_sin_leer > 0 && (
-                          <span className="ml-2 bg-blue-600 text-white text-xs font-semibold px-2 py-0.5 rounded-full">
+                          <span className="ml-2 bg-teal-600 text-white text-xs font-semibold px-2 py-0.5 rounded-full">
                             {contacto.mensajes_sin_leer}
                           </span>
                         )}
@@ -256,7 +255,7 @@ export default function MensajesPage() {
             <>
               {/* Header de conversación */}
               <div className="bg-white border-b p-4 flex items-center gap-3">
-                <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-semibold">
+                <div className="w-10 h-10 bg-teal-600 rounded-full flex items-center justify-center text-white font-semibold">
                   {contactoActual?.nombre_completo?.[0] ||
                     contactoSeleccionado[0]}
                 </div>
@@ -285,7 +284,7 @@ export default function MensajesPage() {
                     <div
                       className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
                         mensaje.tipo === "SALIDA"
-                          ? "bg-blue-600 text-white"
+                          ? "bg-teal-600 text-white"
                           : "bg-white text-gray-800 border"
                       }`}
                     >
@@ -293,7 +292,7 @@ export default function MensajesPage() {
                       <div
                         className={`text-xs mt-1 flex items-center gap-1 ${
                           mensaje.tipo === "SALIDA"
-                            ? "text-blue-100"
+                            ? "text-teal-100"
                             : "text-gray-500"
                         }`}
                       >
@@ -315,12 +314,12 @@ export default function MensajesPage() {
                     onChange={(e) => setNuevoMensaje(e.target.value)}
                     onKeyPress={(e) => e.key === "Enter" && enviarMensaje()}
                     placeholder="Escribe un mensaje..."
-                    className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-700 focus:border-transparent"
                   />
                   <button
                     onClick={enviarMensaje}
                     disabled={!nuevoMensaje.trim()}
-                    className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center gap-2"
+                    className="bg-teal-600 text-white px-6 py-2 rounded-lg hover:bg-teal-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center gap-2"
                   >
                     <Send className="w-5 h-5" />
                     Enviar

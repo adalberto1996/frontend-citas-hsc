@@ -27,17 +27,17 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen  from-blue-500 to-blue-700 flex items-center justify-center px-4">
+    <div className="min-h-screen  from-teal-500 to-teal-700 flex items-center justify-center px-4">
       <div className="max-w-md w-full">
         {/* Logo/Header */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-20 h-20 bg-white rounded-full mb-4">
-            <Lock className="w-10 h-10 text-blue-600" />
+            <Lock className="w-10 h-10 text-teal-600" />
           </div>
           <h1 className="text-3xl font-bold text-white mb-2">
             Panel de Administración
           </h1>
-          <p className="text-blue-100">Sistema de Gestión de Citas Médicas</p>
+          <p className="text-teal-100">Sistema de Gestión de Citas Médicas</p>
         </div>
 
         {/* Formulario de login */}
@@ -60,7 +60,7 @@ export default function LoginPage() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 text-black border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-3 text-black border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-700 focus:border-transparent"
                   placeholder="Ingresa tu correo"
                   required
                 />
@@ -77,7 +77,7 @@ export default function LoginPage() {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 text-black border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-3 text-black border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-700 focus:border-transparent"
                   placeholder="Ingresa tu contraseña"
                   required
                 />
@@ -87,7 +87,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="w-full bg-teal-600 text-white py-3 rounded-lg font-semibold hover:bg-teal-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               {loading ? (
                 <>

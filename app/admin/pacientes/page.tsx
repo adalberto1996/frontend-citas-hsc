@@ -268,25 +268,25 @@ export default function PacientesPage() {
       <div className="h-full flex flex-col bg-gray-100">
         <div className="p-6 flex justify-between items-center">
           <div className="flex items-center gap-3">
-            <div className="p-3 bg-blue-600 rounded-lg">
+            <div className="p-3 bg-teal-600 rounded-lg">
               <User className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-blue-800">Pacientes</h1>
+              <h1 className="text-2xl font-bold text-teal-800">Pacientes</h1>
               <p className="text-sm text-gray-600">Gestión de pacientes</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
             <button
               onClick={() => setShowUpload(true)}
-              className="flex items-center gap-2 px-4 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50"
+              className="flex items-center gap-2 px-4 py-2 border border-teal-600 text-teal-600 rounded-lg hover:bg-teal-50"
             >
               <Upload className="w-4 h-4" />
               Cargar Lista
             </button>
             <button
               onClick={openCreate}
-              className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+              className="flex items-center gap-2 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700"
             >
               <Plus className="w-4 h-4" />
               Nuevo Paciente
@@ -302,16 +302,16 @@ export default function PacientesPage() {
               value={busqueda}
               onChange={(e) => setBusqueda(e.target.value)}
               placeholder="Buscar por documento, nombre o EPS"
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-blue-900 placeholder:text-gray-500"
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-700 focus:border-transparent text-teal-900 placeholder:text-gray-500"
             />
           </div>
         </div>
 
         <div className="px-6 pb-6">
           <div className="bg-white rounded-lg shadow overflow-hidden">
-            <div className="px-4 py-3 border-b border-blue-200">
+            <div className="px-4 py-3 border-b border-teal-200">
               <div className="flex flex-wrap gap-3 items-center">
-                <span className="text-xs text-blue-900">Columnas extra</span>
+                <span className="text-xs text-teal-900">Columnas extra</span>
                 {[
                   { key: "tipo_identificacion", label: "Tipo ID" },
                   { key: "fecha_nacimiento", label: "Nacimiento" },
@@ -325,7 +325,7 @@ export default function PacientesPage() {
                   { key: "regimen", label: "Regimen" },
                   { key: "tipo_afiliado", label: "Tipo Afiliado" },
                 ].map((opt) => (
-                  <label key={opt.key} className="flex items-center gap-2 text-xs text-blue-900">
+                  <label key={opt.key} className="flex items-center gap-2 text-xs text-teal-900">
                     <input
                       type="checkbox"
                       checked={selectedExtraCols.includes(opt.key)}
@@ -348,30 +348,30 @@ export default function PacientesPage() {
             ) : (
               <div className="max-h-[60vh] overflow-y-auto overflow-x-auto">
                 <table className="min-w-full text-sm">
-                  <thead className="bg-blue-50">
+                  <thead className="bg-teal-50">
                     <tr>
                       {columns.map((c) => (
-                        <th key={c.key} className="px-3 py-2 text-left text-blue-900 font-semibold border-b border-blue-200">
+                        <th key={c.key} className="px-3 py-2 text-left text-teal-900 font-semibold border-b border-teal-200">
                           {c.label}
                         </th>
                       ))}
-                      <th className="px-3 py-2 text-right text-blue-900 font-semibold border-b border-blue-200">Acciones</th>
+                      <th className="px-3 py-2 text-right text-teal-900 font-semibold border-b border-teal-200">Acciones</th>
                     </tr>
                   </thead>
                   <tbody>
                     {filtered.map((p) => (
-                      <tr key={p.id} className="border-t border-blue-200">
+                      <tr key={p.id} className="border-t border-teal-200">
                         {columns.map((c) => (
-                          <td key={c.key} className="px-3 py-2 text-blue-900">
+                          <td key={c.key} className="px-3 py-2 text-teal-900">
                             {c.value(p)}
                           </td>
                         ))}
                         <td className="px-3 py-2">
                           <div className="flex gap-2 justify-end">
-                            <button onClick={() => openEdit(p)} className="px-3 py-1 bg-amber-500 text-white rounded hover:bg-amber-600">
+                            <button onClick={() => openEdit(p)} className="px-3 py-1 bg-amber-500 text-white rounded-full hover:bg-amber-600">
                               Editar
                             </button>
-                            <button onClick={() => onDelete(p.id)} disabled={busyId === p.id} className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 disabled:bg-gray-400">
+                            <button onClick={() => onDelete(p.id)} disabled={busyId === p.id} className="px-3 py-1 bg-red-600 text-white rounded-full hover:bg-red-700 disabled:bg-gray-400">
                               Eliminar
                             </button>
                           </div>
@@ -387,10 +387,10 @@ export default function PacientesPage() {
           <div className="flex items-center justify-between mt-4">
             <div className="text-sm text-gray-600">Página {page} de {lastPage} • Total: {total}</div>
             <div className="flex gap-2">
-              <button onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page <= 1 || loading} className="px-3 py-1 border rounded disabled:opacity-50">
+              <button onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page <= 1 || loading} className="px-3 py-1 bg-teal-50 text-teal-700 border border-teal-200 rounded-full hover:bg-teal-100 disabled:opacity-50">
                 Anterior
               </button>
-              <button onClick={() => setPage((p) => Math.min(lastPage, p + 1))} disabled={page >= lastPage || loading} className="px-3 py-1 border rounded disabled:opacity-50">
+              <button onClick={() => setPage((p) => Math.min(lastPage, p + 1))} disabled={page >= lastPage || loading} className="px-3 py-1 bg-teal-50 text-teal-700 border border-teal-200 rounded-full hover:bg-teal-100 disabled:opacity-50">
                 Siguiente
               </button>
             </div>
@@ -400,10 +400,10 @@ export default function PacientesPage() {
         {showCreate && (
           <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
             <div className="bg-white rounded-lg shadow-lg w-full max-w-2xl">
-              <div className="flex items-center justify-between px-6 py-4 border-b border-blue-200">
+              <div className="flex items-center justify-between px-6 py-4 border-b border-teal-200">
                 <div className="flex items-center gap-2">
-                  <User className="w-5 h-5 text-blue-600" />
-                  <h3 className="font-semibold text-blue-800">Nuevo Paciente</h3>
+                  <User className="w-5 h-5 text-teal-600" />
+                  <h3 className="font-semibold text-teal-800">Nuevo Paciente</h3>
                 </div>
                 <button onClick={() => setShowCreate(false)} className="p-2 hover:bg-gray-100 rounded">
                   <X className="w-5 h-5 text-gray-600" />
@@ -412,48 +412,48 @@ export default function PacientesPage() {
               <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm text-gray-700 mb-2">Tipo ID</label>
-                  <input value={form.tipo_identificacion} onChange={(e) => setForm({ ...form, tipo_identificacion: e.target.value })} className="w-full px-3 py-2 border text-blue-900 rounded" />
+                  <input value={form.tipo_identificacion} onChange={(e) => setForm({ ...form, tipo_identificacion: e.target.value })} className="w-full px-3 py-2 border text-teal-900 rounded" />
                 </div>
                 <div>
                   <label className="block text-sm text-gray-700 mb-2">Documento</label>
-                  <input value={form.numero_identificacion} onChange={(e) => setForm({ ...form, numero_identificacion: e.target.value })} className="w-full px-3 py-2 border text-blue-900 rounded" />
+                  <input value={form.numero_identificacion} onChange={(e) => setForm({ ...form, numero_identificacion: e.target.value })} className="w-full px-3 py-2 border text-teal-900 rounded" />
                 </div>
                 <div>
                   <label className="block text-sm text-gray-700 mb-2">Primer Nombre</label>
-                  <input value={form.primer_nombre} onChange={(e) => setForm({ ...form, primer_nombre: e.target.value })} className="w-full px-3 py-2 border text-blue-900 rounded" />
+                  <input value={form.primer_nombre} onChange={(e) => setForm({ ...form, primer_nombre: e.target.value })} className="w-full px-3 py-2 border text-teal-900 rounded" />
                 </div>
                 <div>
                   <label className="block text-sm text-gray-700 mb-2">Segundo Nombre</label>
-                  <input value={form.segundo_nombre} onChange={(e) => setForm({ ...form, segundo_nombre: e.target.value })} className="w-full px-3 py-2 border text-blue-900 rounded" />
+                  <input value={form.segundo_nombre} onChange={(e) => setForm({ ...form, segundo_nombre: e.target.value })} className="w-full px-3 py-2 border text-teal-900 rounded" />
                 </div>
                 <div>
                   <label className="block text-sm text-gray-700 mb-2">Primer Apellido</label>
-                  <input value={form.primer_apellido} onChange={(e) => setForm({ ...form, primer_apellido: e.target.value })} className="w-full px-3 py-2 border text-blue-900 rounded" />
+                  <input value={form.primer_apellido} onChange={(e) => setForm({ ...form, primer_apellido: e.target.value })} className="w-full px-3 py-2 border text-teal-900 rounded" />
                 </div>
                 <div>
                   <label className="block text-sm text-gray-700 mb-2">Segundo Apellido</label>
-                  <input value={form.segundo_apellido} onChange={(e) => setForm({ ...form, segundo_apellido: e.target.value })} className="w-full px-3 py-2 border text-blue-900 rounded" />
+                  <input value={form.segundo_apellido} onChange={(e) => setForm({ ...form, segundo_apellido: e.target.value })} className="w-full px-3 py-2 border text-teal-900 rounded" />
                 </div>
                 <div>
                   <label className="block text-sm text-gray-700 mb-2">EPS</label>
-                  <input value={form.eps} onChange={(e) => setForm({ ...form, eps: e.target.value })} className="w-full px-3 py-2 border text-blue-900 rounded" />
+                  <input value={form.eps} onChange={(e) => setForm({ ...form, eps: e.target.value })} className="w-full px-3 py-2 border text-teal-900 rounded" />
                 </div>
                 <div>
                   <label className="block text-sm text-gray-700 mb-2">Sexo</label>
-                  <input value={form.sexo} onChange={(e) => setForm({ ...form, sexo: e.target.value })} className="w-full px-3 py-2 border text-blue-900 rounded" />
+                  <input value={form.sexo} onChange={(e) => setForm({ ...form, sexo: e.target.value })} className="w-full px-3 py-2 border text-teal-900 rounded" />
                 </div>
                 <div>
                   <label className="block text-sm text-gray-700 mb-2">Celular Principal</label>
-                  <input value={form.celularpal} onChange={(e) => setForm({ ...form, celularpal: e.target.value })} className="w-full px-3 py-2 border text-blue-900 rounded" />
+                  <input value={form.celularpal} onChange={(e) => setForm({ ...form, celularpal: e.target.value })} className="w-full px-3 py-2 border text-teal-900 rounded" />
                 </div>
                 <div>
                   <label className="block text-sm text-gray-700 mb-2">Celular Secundario</label>
-                  <input value={form.celularsec} onChange={(e) => setForm({ ...form, celularsec: e.target.value })} className="w-full px-3 py-2 border text-blue-900 rounded" />
+                  <input value={form.celularsec} onChange={(e) => setForm({ ...form, celularsec: e.target.value })} className="w-full px-3 py-2 border text-teal-900 rounded" />
                 </div>
               </div>
               <div className="px-6 py-4 border-t flex justify-end gap-2">
                 <button onClick={() => setShowCreate(false)} className="px-4 py-2 border rounded">Cancelar</button>
-                <button onClick={onCreate} disabled={creating} className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-400">Crear</button>
+                <button onClick={onCreate} disabled={creating} className="px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-700 disabled:bg-gray-400">Crear</button>
               </div>
             </div>
           </div>
@@ -462,10 +462,10 @@ export default function PacientesPage() {
         {showEditId && (
           <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
             <div className="bg-white rounded-lg shadow-lg w-full max-w-2xl">
-              <div className="flex items-center justify-between px-6 py-4 border-b border-blue-200">
+              <div className="flex items-center justify-between px-6 py-4 border-b border-teal-200">
                 <div className="flex items-center gap-2">
                   <Edit className="w-5 h-5 text-amber-600" />
-                  <h3 className="font-semibold text-blue-800">Editar Paciente</h3>
+                  <h3 className="font-semibold text-teal-800">Editar Paciente</h3>
                 </div>
                 <button onClick={() => setShowEditId(null)} className="p-2 hover:bg-gray-100 rounded">
                   <X className="w-5 h-5 text-gray-600" />
@@ -474,43 +474,43 @@ export default function PacientesPage() {
               <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm text-gray-700 mb-2">Tipo ID</label>
-                  <input value={form.tipo_identificacion} onChange={(e) => setForm({ ...form, tipo_identificacion: e.target.value })} className="w-full px-3 py-2 border text-blue-900 rounded" />
+                  <input value={form.tipo_identificacion} onChange={(e) => setForm({ ...form, tipo_identificacion: e.target.value })} className="w-full px-3 py-2 border text-teal-900 rounded" />
                 </div>
                 <div>
                   <label className="block text-sm text-gray-700 mb-2">Documento</label>
-                  <input value={form.numero_identificacion} onChange={(e) => setForm({ ...form, numero_identificacion: e.target.value })} className="w-full px-3 py-2 border text-blue-900 rounded" />
+                  <input value={form.numero_identificacion} onChange={(e) => setForm({ ...form, numero_identificacion: e.target.value })} className="w-full px-3 py-2 border text-teal-900 rounded" />
                 </div>
                 <div>
                   <label className="block text-sm text-gray-700 mb-2">Primer Nombre</label>
-                  <input value={form.primer_nombre} onChange={(e) => setForm({ ...form, primer_nombre: e.target.value })} className="w-full px-3 py-2 border text-blue-900 rounded" />
+                  <input value={form.primer_nombre} onChange={(e) => setForm({ ...form, primer_nombre: e.target.value })} className="w-full px-3 py-2 border text-teal-900 rounded" />
                 </div>
                 <div>
                   <label className="block text-sm text-gray-700 mb-2">Segundo Nombre</label>
-                  <input value={form.segundo_nombre} onChange={(e) => setForm({ ...form, segundo_nombre: e.target.value })} className="w-full px-3 py-2 border text-blue-900 rounded" />
+                  <input value={form.segundo_nombre} onChange={(e) => setForm({ ...form, segundo_nombre: e.target.value })} className="w-full px-3 py-2 border text-teal-900 rounded" />
                 </div>
                 <div>
                   <label className="block text-sm text-gray-700 mb-2">Primer Apellido</label>
-                  <input value={form.primer_apellido} onChange={(e) => setForm({ ...form, primer_apellido: e.target.value })} className="w-full px-3 py-2 border text-blue-900 rounded" />
+                  <input value={form.primer_apellido} onChange={(e) => setForm({ ...form, primer_apellido: e.target.value })} className="w-full px-3 py-2 border text-teal-900 rounded" />
                 </div>
                 <div>
                   <label className="block text-sm text-gray-700 mb-2">Segundo Apellido</label>
-                  <input value={form.segundo_apellido} onChange={(e) => setForm({ ...form, segundo_apellido: e.target.value })} className="w-full px-3 py-2 border text-blue-900 rounded" />
+                  <input value={form.segundo_apellido} onChange={(e) => setForm({ ...form, segundo_apellido: e.target.value })} className="w-full px-3 py-2 border text-teal-900 rounded" />
                 </div>
                 <div>
                   <label className="block text-sm text-gray-700 mb-2">EPS</label>
-                  <input value={form.eps} onChange={(e) => setForm({ ...form, eps: e.target.value })} className="w-full px-3 py-2 border text-blue-900 rounded" />
+                  <input value={form.eps} onChange={(e) => setForm({ ...form, eps: e.target.value })} className="w-full px-3 py-2 border text-teal-900 rounded" />
                 </div>
                 <div>
                   <label className="block text-sm text-gray-700 mb-2">Sexo</label>
-                  <input value={form.sexo} onChange={(e) => setForm({ ...form, sexo: e.target.value })} className="w-full px-3 py-2 border text-blue-900 rounded" />
+                  <input value={form.sexo} onChange={(e) => setForm({ ...form, sexo: e.target.value })} className="w-full px-3 py-2 border text-teal-900 rounded" />
                 </div>
                 <div>
                   <label className="block text-sm text-gray-700 mb-2">Celular Principal</label>
-                  <input value={form.celularpal} onChange={(e) => setForm({ ...form, celularpal: e.target.value })} className="w-full px-3 py-2 border text-blue-900 rounded" />
+                  <input value={form.celularpal} onChange={(e) => setForm({ ...form, celularpal: e.target.value })} className="w-full px-3 py-2 border text-teal-900 rounded" />
                 </div>
                 <div>
                   <label className="block text-sm text-gray-700 mb-2">Celular Secundario</label>
-                  <input value={form.celularsec} onChange={(e) => setForm({ ...form, celularsec: e.target.value })} className="w-full px-3 py-2 border text-blue-900 rounded" />
+                  <input value={form.celularsec} onChange={(e) => setForm({ ...form, celularsec: e.target.value })} className="w-full px-3 py-2 border text-teal-900 rounded" />
                 </div>
               </div>
               <div className="px-6 py-4 border-t flex justify-end gap-2">
@@ -524,10 +524,10 @@ export default function PacientesPage() {
         {showUpload && (
           <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
             <div className="bg-white rounded-lg shadow-lg w-full max-w-md">
-              <div className="flex items-center justify-between px-6 py-4 border-b border-blue-200">
+              <div className="flex items-center justify-between px-6 py-4 border-b border-teal-200">
                 <div className="flex items-center gap-2">
-                  <Upload className="w-5 h-5 text-blue-600" />
-                  <h3 className="font-semibold text-blue-800">Cargar Lista de Pacientes</h3>
+                  <Upload className="w-5 h-5 text-teal-600" />
+                  <h3 className="font-semibold text-teal-800">Cargar Lista de Pacientes</h3>
                 </div>
                 <button onClick={() => setShowUpload(false)} className="p-2 hover:bg-gray-100 rounded">
                   <X className="w-5 h-5 text-gray-600" />
@@ -539,7 +539,7 @@ export default function PacientesPage() {
               </div>
               <div className="px-6 py-4 border-t flex justify-end gap-2">
                 <button onClick={() => setShowUpload(false)} className="px-4 py-2 border rounded">Cancelar</button>
-                <button onClick={onUpload} disabled={uploading || !uploadFile} className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-400">Subir</button>
+                <button onClick={onUpload} disabled={uploading || !uploadFile} className="px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-700 disabled:bg-gray-400">Subir</button>
               </div>
             </div>
           </div>

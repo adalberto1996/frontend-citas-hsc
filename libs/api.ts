@@ -12,7 +12,7 @@ interface ApiErrorResponse {
   error?: string;
 }
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api";
+const API_URL = "http://localhost:16000/api";
 
 const api = axios.create({
   baseURL: API_URL,
@@ -197,6 +197,27 @@ export const getPatient = async (id: number) => {
 // ===== BACKOFFICE: USERS =====
 export const listUsers = async (params?: Record<string, unknown>) => {
   const response = await api.get("/backoffice/users", { params });
+  return response.data;
+};
+
+// ===== BACKOFFICE: PROFESIONALES =====
+export const listProfessionals = async (params?: Record<string, unknown>) => {
+  const response = await api.get("/backoffice/professionals", { params });
+  return response.data;
+};
+export const createProfessional = async (data: { nombre?: string; especialidad: string; activo?: boolean }) => {
+  const response = await api.post("/backoffice/professionals", data);
+  return response.data;
+};
+export const getProfessional = async (id: number) => {
+  const response = await api.get(`/backoffice/professionals/${id}`);
+  return response.data;
+};
+export const updateProfessional = async (
+  id: number,
+  data: Partial<{ activo: string; especialidad: string; nombre: string }>
+) => {
+  const response = await api.put(`/backoffice/professionals/${id}`, data);
   return response.data;
 };
 export const createUser = async (data: { name: string; email: string; password: string; role: string }) => {

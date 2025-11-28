@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 export default function Home() {
@@ -108,30 +109,26 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-50 via-white to-blue-50">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-teal-50 via-white to-teal-50">
       {/* Header */}
       <header className="bg-white shadow-md">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              {/* Logo del Hospital */}
-              <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-800 rounded-full flex items-center justify-center shadow-lg">
-                <div className="text-white font-bold text-2xl">HSC</div>
+              {/* Logo */}
+              <div className="flex items-center">
+                <Image src="/schedbot-logo.svg" alt="SchedBot Solutions" width={160} height={40} />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-blue-900">
-                  Hospital San Cristóbal
-                </h1>
-                <p className="text-sm text-gray-600">
-                  Sistema de Gestión de Citas
-                </p>
+                <h1 className="text-2xl font-bold text-teal-900">Sistema de Gestión de Citas</h1>
+                <p className="text-sm text-gray-600">SchedBot Solutions</p>
               </div>
             </div>
 
             {/* Botón de Login */}
             <button
               onClick={handleLogin}
-              className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-md"
+              className="flex items-center gap-2 px-6 py-3 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors shadow-md"
             >
               <User size={20} />
               <span className="font-semibold">Acceso Administrativo</span>
@@ -146,8 +143,8 @@ export default function Home() {
           {/* Tarjeta de Consulta */}
           <div className="bg-white rounded-2xl shadow-xl p-8 mb-8">
             <div className="text-center mb-8">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
-                <Calendar className="text-blue-600" size={32} />
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-teal-100 rounded-full mb-4">
+                <Calendar className="text-teal-600" size={32} />
               </div>
               <h2 className="text-3xl font-bold text-gray-900 mb-2">
                 Consulta tu Cita
@@ -172,7 +169,7 @@ export default function Home() {
                   }
                   onKeyPress={handleKeyPress}
                   placeholder="Ingresa tu número de documento"
-                  className="w-full px-4 py-3 border text-black border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  className="w-full px-4 py-3 border text.black border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-700 focus:border-transparent transition-all"
                 />
               </div>
 
@@ -180,7 +177,7 @@ export default function Home() {
               <button
                 onClick={buscarCita}
                 disabled={loading || !documento}
-                className="w-full flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg font-semibold text-lg"
+                className="w-full flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-teal-600 to-teal-700 text-white rounded-lg hover:from-teal-700 hover:to-teal-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg font-semibold text-lg"
               >
                 {loading ? (
                   <>
@@ -224,7 +221,7 @@ export default function Home() {
               <div className="p-6 space-y-4">
                 {/* Paciente */}
                 <div className="flex items-start gap-4 p-4 bg-gray-50 rounded-lg">
-                  <User className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
+                  <User className="w-6 h-6 text-teal-600 flex-shrink-0 mt-1" />
                   <div className="flex-1">
                     <p className="text-sm text-gray-600 mb-1">Paciente</p>
                     <p className="text-lg font-semibold text-gray-800">
@@ -238,7 +235,7 @@ export default function Home() {
 
                 {/* Fecha */}
                 <div className="flex items-start gap-4 p-4 bg-gray-50 rounded-lg">
-                  <Calendar className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
+                  <Calendar className="w-6 h-6 text-teal-600 flex-shrink-0 mt-1" />
                   <div className="flex-1">
                     <p className="text-sm text-gray-600 mb-1">Fecha</p>
                     <p className="text-lg font-semibold text-gray-800 capitalize">
@@ -249,7 +246,7 @@ export default function Home() {
 
                 {/* Hora */}
                 <div className="flex items-start gap-4 p-4 bg-gray-50 rounded-lg">
-                  <Clock className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
+                  <Clock className="w-6 h-6 text-teal-600 flex-shrink-0 mt-1" />
                   <div className="flex-1">
                     <p className="text-sm text-gray-600 mb-1">Hora</p>
                     <p className="text-lg font-semibold text-gray-800">
@@ -260,7 +257,7 @@ export default function Home() {
 
                 {/* Especialidad */}
                 <div className="flex items-start gap-4 p-4 bg-gray-50 rounded-lg">
-                  <User className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
+                  <User className="w-6 h-6 text-teal-600 flex-shrink-0 mt-1" />
                   <div className="flex-1">
                     <p className="text-sm text-gray-600 mb-1">Especialidad</p>
                     <p className="text-lg font-semibold text-gray-800">
@@ -276,7 +273,7 @@ export default function Home() {
 
                 {/* Lugar */}
                 <div className="flex items-start gap-4 p-4 bg-gray-50 rounded-lg">
-                  <MapPin className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
+                  <MapPin className="w-6 h-6 text-teal-600 flex-shrink-0 mt-1" />
                   <div className="flex-1">
                     <p className="text-sm text-gray-600 mb-1">Lugar</p>
                     <p className="text-lg font-semibold text-gray-800">
@@ -292,11 +289,11 @@ export default function Home() {
 
                 {/* Observaciones */}
                 {cita.observaciones && (
-                  <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                    <p className="text-sm font-semibold text-blue-800 mb-1">
+                  <div className="p-4 bg-teal-50 border border-teal-200 rounded-lg">
+                    <p className="text-sm font-semibold text-teal-800 mb-1">
                       Observaciones:
                     </p>
-                    <p className="text-sm text-blue-700">
+                    <p className="text-sm text-teal-700">
                       {cita.observaciones}
                     </p>
                   </div>
@@ -314,8 +311,8 @@ export default function Home() {
           {/* Información de Contacto */}
           <div className="grid md:grid-cols-3 gap-4">
             <div className="bg-white rounded-lg shadow p-4 flex items-start gap-3">
-              <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Phone className="text-blue-600" size={20} />
+              <div className="w-10 h-10 bg-teal-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                <Phone className="text-teal-600" size={20} />
               </div>
               <div>
                 <h3 className="font-semibold text-gray-900 text-sm">
@@ -326,8 +323,8 @@ export default function Home() {
             </div>
 
             <div className="bg-white rounded-lg shadow p-4 flex items-start gap-3">
-              <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Clock className="text-blue-600" size={20} />
+              <div className="w-10 h-10 bg-teal-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                <Clock className="text-teal-600" size={20} />
               </div>
               <div>
                 <h3 className="font-semibold text-gray-900 text-sm">
@@ -339,8 +336,8 @@ export default function Home() {
             </div>
 
             <div className="bg-white rounded-lg shadow p-4 flex items-start gap-3">
-              <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                <MapPin className="text-blue-600" size={20} />
+              <div className="w-10 h-10 bg-teal-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                <MapPin className="text-teal-600" size={20} />
               </div>
               <div>
                 <h3 className="font-semibold text-gray-900 text-sm">
@@ -378,7 +375,7 @@ export default function Home() {
                 Cumplimos con la Ley 1581 de 2012 y el Decreto 1377 de 2013
                 sobre protección de datos personales.
               </p>
-              <button className="text-blue-400 hover:text-blue-300 text-sm flex items-center gap-1">
+              <button className="text-teal-400 hover:text-teal-300 text-sm flex items-center gap-1">
                 <FileText size={16} />
                 Política de Privacidad
               </button>

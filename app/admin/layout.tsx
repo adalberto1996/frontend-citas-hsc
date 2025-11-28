@@ -16,6 +16,7 @@ import {
   X,
 } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 export default function AdminLayout({
@@ -38,7 +39,7 @@ export default function AdminLayout({
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100">
         <div className="text-center">
-          <Loader2 className="w-12 h-12 text-blue-600 animate-spin mx-auto mb-4" />
+          <Loader2 className="w-12 h-12 text-teal-600 animate-spin mx-auto mb-4" />
           <p className="text-gray-600">Cargando...</p>
         </div>
       </div>
@@ -101,9 +102,9 @@ export default function AdminLayout({
       roles: ["ADMIN", "OPERADOR"],
     },
     {
-      name: "Formularios",
-      icon: ClipboardList,
-      href: "/admin/formularios",
+      name: "Profesionales",
+      icon: Users,
+      href: "/admin/profesionales",
       roles: ["ADMIN"],
     },
     {
@@ -142,9 +143,10 @@ export default function AdminLayout({
                 <Menu className="w-6 h-6 text-gray-600" />
               )}
             </button>
-            <h1 className="text-xl font-bold text-gray-800">
-              Panel de Administración
-            </h1>
+            <div className="flex items-center gap-3">
+              <Image src="/schedbot-logo.svg" alt="SchedBot Solutions" width={140} height={36} />
+              <span className="hidden sm:inline text-sm text-gray-600">Panel de Administración</span>
+            </div>
           </div>
 
           <div className="flex items-center gap-4">
@@ -173,13 +175,7 @@ export default function AdminLayout({
           {/* Logo/Título */}
           <div className="px-6 mb-6">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
-                <MessageCircle className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <h2 className="font-bold text-gray-800">Hospital</h2>
-                <p className="text-xs text-gray-500">Sistema de Citas</p>
-              </div>
+              <Image src="/schedbot-logo.svg" alt="SchedBot Solutions" width={160} height={40} />
             </div>
           </div>
 
@@ -197,7 +193,7 @@ export default function AdminLayout({
                   disabled={isDisabled}
                   className={`w-full flex items-center gap-3 px-3 py-3 rounded-lg mb-1 transition-colors ${
                     active
-                      ? "bg-blue-50 text-blue-600"
+                      ? "bg-teal-50 text-teal-700"
                       : "text-gray-700 hover:bg-gray-50"
                   } ${isDisabled ? "opacity-50 cursor-not-allowed" : ""}`}
                 >

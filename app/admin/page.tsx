@@ -1,7 +1,7 @@
 "use client";
 
 import ProtectedRoute from "@/components/ProtectedRoute";
-import axios from "axios";
+import api from "@/libs/api";
 import {
   Clock,
   Copy,
@@ -14,7 +14,6 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { io, Socket } from "socket.io-client";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api";
 const WS_URL = process.env.NEXT_PUBLIC_WS_URL || "";
 
 interface Mensaje {
@@ -93,7 +92,7 @@ export default function MensajesPage() {
   const cargarContactos = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get(`${API_URL}/mensajes/contactos`, {
+      const response = await api.get(`/mensajes/contactos`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -108,7 +107,7 @@ export default function MensajesPage() {
   const cargarPlantillas = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get(`${API_URL}/mensajes/plantillas`, {
+      const response = await api.get(`/mensajes/plantillas`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -123,8 +122,7 @@ export default function MensajesPage() {
   const cargarConversacion = async (telefono: string) => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get(
-        `${API_URL}/mensajes/conversacion/${telefono}`,
+      const response = await api.get(`/mensajes/conversacion/${telefono}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -145,8 +143,8 @@ export default function MensajesPage() {
 
     try {
       const token = localStorage.getItem("token");
-      await axios.post(
-        `${API_URL}/mensajes/enviar-personalizado`,
+      await api.post(
+        `/mensajes/enviar-personalizado`,
         {
           telefono: contactoSeleccionado,
           mensaje: nuevoMensaje,
@@ -227,10 +225,10 @@ export default function MensajesPage() {
   return (
     <ProtectedRoute>
       <div className="h-full flex bg-gray-100 overflow-hidden">
-        <div className="h-full flex w-full shadow-blue-300 rounded-lg overflow-hidden mx-1 my-0.5 ">
+        <div className="h-full flex w-full shadow-teal-300 rounded-lg overflow-hidden mx-1 my-0.5 ">
           {/* Lista de contactos */}
           <div className="h-full max-w-sm w-full sm:w-80 bg-white border-r flex flex-col">
-            <div className="p-4 bg-blue-600 text-white">
+            <div className="p-4 bg-teal-600 text-white">
               <h1 className="text-xl font-bold flex items-center gap-2">
                 <MessageCircle className="w-6 h-6" />
                 Mensajes WhatsApp
@@ -245,7 +243,7 @@ export default function MensajesPage() {
                   placeholder="Buscar contacto..."
                   value={busqueda}
                   onChange={(e) => setBusqueda(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-700 focus:border-transparent"
                 />
               </div>
             </div>
@@ -263,12 +261,12 @@ export default function MensajesPage() {
                     onClick={() => cargarConversacion(contacto.telefono)}
                     className={`p-4 border-b cursor-pointer hover:bg-gray-50 transition-colors ${
                       contactoSeleccionado === contacto.telefono
-                        ? "bg-blue-50"
+                        ? "bg-teal-50"
                         : ""
                     }`}
                   >
                     <div className="flex items-start gap-3">
-                      <div className="flex-shrink-0 w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white font-semibold">
+                      <div className="flex-shrink-0 w-12 h-12 bg-teal-600 rounded-full flex items-center justify-center text-white font-semibold">
                         {contacto.nombre_completo?.[0] || contacto.telefono[0]}
                       </div>
                       <div className="flex-1 min-w-0">
@@ -285,7 +283,7 @@ export default function MensajesPage() {
                             {contacto.ultimo_mensaje}
                           </p>
                           {contacto.mensajes_sin_leer > 0 && (
-                            <span className="ml-2 bg-blue-600 text-white text-xs font-semibold px-2 py-0.5 rounded-full">
+                            <span className="ml-2 bg-teal-600 text-white text-xs font-semibold px-2 py-0.5 rounded-full">
                               {contacto.mensajes_sin_leer}
                             </span>
                           )}
@@ -304,7 +302,7 @@ export default function MensajesPage() {
                 {/* Header de conversación */}
                 <div className="bg-white border-b p-4 flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-semibold">
+                    <div className="w-10 h-10 bg-teal-600 rounded-full flex items-center justifycenter text-white font-semibold">
                       {contactoActual?.nombre_completo?.[0] ||
                         contactoSeleccionado[0]}
                     </div>
@@ -319,7 +317,7 @@ export default function MensajesPage() {
                         </div>
                         <button
                           onClick={() => copiarTelefono(contactoSeleccionado)}
-                          className="text-blue-600 hover:text-blue-700"
+                          className="text-teal-700 hover:text-teal-800"
                           title="Copiar teléfono"
                         >
                           <Copy className="w-4 h-4" />
@@ -330,7 +328,7 @@ export default function MensajesPage() {
 
                   <button
                     onClick={() => setMostrarPlantillas(!mostrarPlantillas)}
-                    className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                    className="flex items-center gap-2 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors"
                   >
                     <Sparkles className="w-4 h-4" />
                     Plantillas
@@ -339,7 +337,7 @@ export default function MensajesPage() {
 
                 {/* Plantillas */}
                 {mostrarPlantillas && (
-                  <div className="bg-blue-50 border-b p-4 max-h-48 overflow-y-auto">
+                  <div className="bg-teal-50 border-b p-4 max-h-48 overflow-y-auto">
                     <p className="text-sm font-semibold text-gray-700 mb-2">
                       Selecciona una plantilla:
                     </p>
@@ -354,7 +352,7 @@ export default function MensajesPage() {
                               <button
                                 key={plantilla.id_plantilla}
                                 onClick={() => usarPlantilla(plantilla)}
-                                className="px-3 py-1 bg-blue-500 border border-blue-200 rounded-lg text-sm hover:bg-blue-700 transition-colors"
+                                className="px-3 py-1 bg-teal-600 border border-teal-200 rounded-lg text-sm hover:bg-teal-700 transition-colors"
                               >
                                 {plantilla.nombre}
                               </button>
@@ -380,7 +378,7 @@ export default function MensajesPage() {
                       <div
                         className={`relative max-w-[75%] px-4 py-2 pg-whait rounded-2xl shadow-sm ${
                           mensaje.tipo === "SALIDA"
-                            ? "bg-blue-600 text-white rounded-br-none"
+                            ? "bg-teal-600 text-white rounded-br-none"
                             : "border-amber-100 bg-amber-100 text-gray-800 border rounded-bl-none"
                         }`}
                       >
@@ -390,7 +388,7 @@ export default function MensajesPage() {
                         <div
                           className={`text-xs mt-1 flex items-center gap-1 ${
                             mensaje.tipo === "SALIDA"
-                              ? "text-blue-100"
+                              ? "text-teal-100"
                               : "text-gray-500"
                           }`}
                         >
@@ -407,7 +405,7 @@ export default function MensajesPage() {
                         <span
                           className={`absolute bottom-0 w-3 h-3 ${
                             mensaje.tipo === "SALIDA"
-                              ? "right-0 bg-blue-600 clip-path-triangle-right"
+                            ? "right-0 bg-teal-600 clip-path-triangle-right"
                               : "left-0 bg-white border-b border-l clip-path-triangle-left"
                           }`}
                         ></span>
@@ -431,12 +429,12 @@ export default function MensajesPage() {
                       }}
                       placeholder="Escribe un mensaje..."
                       rows={2}
-                      className="flex-1 px-4 py-1 border text-black border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                      className="flex-1 px-4 py-1 border text-black border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-700 focus:border-transparent resize-none"
                     />
                     <button
                       onClick={enviarMensaje}
                       disabled={!nuevoMensaje.trim()}
-                      className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center gap-2"
+                      className="bg-teal-600 text-white px-6 py-2 rounded-lg hover:bg-teal-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center gap-2"
                     >
                       <Send className="w-5 h-5" />
                       Enviar

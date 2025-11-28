@@ -3,11 +3,9 @@
 import api from "@/libs/api";
 import Plantilla from "@/libs/interface";
 import { ApiResponse } from "@/types";
-import axios from "axios";
 import { Copy, Edit, FileText, Plus, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api";
 
 export default function PlantillasPage() {
   const [plantillas, setPlantillas] = useState<Plantilla[]>([]);
@@ -20,7 +18,7 @@ export default function PlantillasPage() {
   const cargarPlantillas = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get(`${API_URL}/mensajes/plantillas`, {
+      const response = await api.get(`/mensajes/plantillas`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -58,7 +56,7 @@ export default function PlantillasPage() {
             Gestiona respuestas rápidas para WhatsApp
           </p>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+        <button className="flex items-center gap-2 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700">
           <Plus className="w-5 h-5" />
           Nueva Plantilla
         </button>
@@ -81,7 +79,7 @@ export default function PlantillasPage() {
                   {plantillasCategoria.map((plantilla) => (
                     <div
                       key={plantilla.id_plantilla}
-                      className="border border-gray-200 rounded-lg p-4 hover:border-blue-500 transition-colors"
+                      className="border border-gray-200 rounded-lg p-4 hover:border-teal-500 transition-colors"
                     >
                       <div className="flex justify-between items-start">
                         <h3 className="text-lg font-semibold text-gray-700">
@@ -90,19 +88,19 @@ export default function PlantillasPage() {
                         <div className="flex items-center gap-3">
                           <button
                             onClick={() => copiarTexto(plantilla.mensaje)}
-                            className="text-gray-500 hover:text-gray-700"
+                            className="bg-teal-600 text-white rounded-full p-2 hover:bg-teal-700"
                             title="Copiar mensaje"
                           >
                             <Copy className="w-5 h-5" />
                           </button>
                           <button
-                            className="text-gray-500 hover:text-gray-700"
+                            className="bg-yellow-500 text-white rounded-full p-2 hover:bg-yellow-600"
                             title="Editar plantilla"
                           >
                             <Edit className="w-5 h-5" />
                           </button>
                           <button
-                            className="text-red-500 hover:text-red-700"
+                            className="bg-red-600 text-white rounded-full p-2 hover:bg-red-700"
                             title="Eliminar plantilla"
                           >
                             <Trash2 className="w-5 h-5" />

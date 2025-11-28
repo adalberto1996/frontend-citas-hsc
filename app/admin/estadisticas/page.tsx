@@ -108,9 +108,9 @@ export default function DashboardPage() {
       title: "Citas Hoy",
       value: stats.citasHoy,
       icon: Calendar,
-      color: "bg-blue-500",
-      textColor: "text-blue-600",
-      bgColor: "bg-blue-50",
+      color: "bg-teal-500",
+      textColor: "text-teal-600",
+      bgColor: "bg-teal-50",
     },
     {
       title: "Citas Esta Semana (Agendadas)",
@@ -195,9 +195,9 @@ export default function DashboardPage() {
 
       {/* Filtros de Vista */}
       <div className="flex items-center justify-end mb-4 gap-2">
-        <button onClick={() => setViewMode("todas")} className={`px-3 py-1 rounded border ${viewMode === "todas" ? "bg-blue-600 text-white border-blue-600" : "bg-white text-gray-700"}`}>Todas</button>
-        <button onClick={() => setViewMode("agendadas")} className={`px-3 py-1 rounded border ${viewMode === "agendadas" ? "bg-blue-600 text-white border-blue-600" : "bg-white text-gray-700"}`}>Agendadas</button>
-        <button onClick={() => setViewMode("atencion")} className={`px-3 py-1 rounded border ${viewMode === "atencion" ? "bg-blue-600 text-white border-blue-600" : "bg-white text-gray-700"}`}>Atención</button>
+        <button onClick={() => setViewMode("todas")} className={`px-3 py-1 rounded border ${viewMode === "todas" ? "bg-teal-600 text-white border-teal-600" : "bg-teal-50 text-teal-700 border-teal-200"}`}>Todas</button>
+        <button onClick={() => setViewMode("agendadas")} className={`px-3 py-1 rounded border ${viewMode === "agendadas" ? "bg-teal-600 text-white border-teal-600" : "bg-teal-50 text-teal-700 border-teal-200"}`}>Agendadas</button>
+        <button onClick={() => setViewMode("atencion")} className={`px-3 py-1 rounded border ${viewMode === "atencion" ? "bg-teal-600 text-white border-teal-600" : "bg-teal-50 text-teal-700 border-teal-200"}`}>Atención</button>
       </div>
 
       {/* Stats Cards */}
@@ -231,9 +231,9 @@ export default function DashboardPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <button
             onClick={() => (window.location.href = "/admin/mensajes")}
-            className="flex items-center gap-3 p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors"
+            className="flex items-center gap-3 p-4 bg-teal-50 rounded-lg hover:bg-teal-100 transition-colors"
           >
-            <MessageCircle className="w-6 h-6 text-blue-600" />
+            <MessageCircle className="w-6 h-6 text-teal-600" />
             <div className="text-left">
               <p className="font-semibold text-gray-800">Mensajes</p>
               <p className="text-sm text-gray-600">Ver conversaciones</p>
@@ -291,7 +291,7 @@ export default function DashboardPage() {
             </div>
           </div>
           <div className="flex items-center gap-4 p-3 bg-gray-50 rounded-lg">
-            <AlertCircle className="w-5 h-5 text-blue-600" />
+            <AlertCircle className="w-5 h-5 text-teal-600" />
             <div className="flex-1">
               <p className="font-medium text-gray-800">
                 {stats.solicitudesPendientes} solicitudes pendientes

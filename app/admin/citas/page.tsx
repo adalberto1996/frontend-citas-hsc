@@ -219,15 +219,15 @@ export default function CitasPage() {
       <div className="h-full flex flex-col bg-gray-100">
         <div className="p-6 flex justify-between items-center">
           <div className="flex items-center gap-3">
-            <div className="p-3 bg-blue-600 rounded-lg">
+            <div className="p-3 bg-teal-600 rounded-lg">
               <Calendar className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-blue-800">Citas</h1>
+              <h1 className="text-2xl font-bold text-teal-800">Citas</h1>
               <p className="text-sm text-gray-600">Gestión de citas programadas</p>
             </div>
           </div>
-          <button onClick={() => setShowCreate(true)} className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+          <button onClick={() => setShowCreate(true)} className="flex items-center gap-2 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700">
             <Plus className="w-4 h-4" />
             Nueva Cita
           </button>
@@ -242,7 +242,7 @@ export default function CitasPage() {
                 value={busqueda}
                 onChange={(e) => setBusqueda(e.target.value)}
                 placeholder="Buscar por documento, paciente, profesional o especialidad"
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-blue-900 placeholder:text-gray-500"
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-700 focus:border-transparent text-teal-900 placeholder:text-gray-500"
               />
             </div>
             <div>
@@ -252,7 +252,7 @@ export default function CitasPage() {
                   setPage(1);
                   setEstado(e.target.value);
                 }}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-blue-900"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-teal-900"
               >
                 <option value="">Todos</option>
                 <option value="pendiente">Pendiente</option>
@@ -269,7 +269,7 @@ export default function CitasPage() {
                   setPage(1);
                   setFromDate(e.target.value);
                 }}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-blue-900"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-teal-900"
               />
               <input
                 type="date"
@@ -278,7 +278,7 @@ export default function CitasPage() {
                   setPage(1);
                   setToDate(e.target.value);
                 }}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-blue-900"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-teal-900"
               />
             </div>
           </div>
@@ -286,9 +286,9 @@ export default function CitasPage() {
 
         <div className="px-6 pb-6">
           <div className="bg-white rounded-lg shadow overflow-hidden">
-            <div className="px-4 py-3 border-b border-blue-200">
+            <div className="px-4 py-3 border-b border-teal-200">
               <div className="flex flex-wrap gap-3 items-center">
-                <span className="text-xs text-blue-900">Columnas extra</span>
+                <span className="text-xs text-teal-900">Columnas extra</span>
                 {[
                   { key: "doctor", label: "Doctor" },
                   { key: "tipo_atencion", label: "Tipo Atención" },
@@ -296,7 +296,7 @@ export default function CitasPage() {
                   { key: "canal_agenda", label: "Canal" },
                   { key: "notas", label: "Notas" },
                 ].map((opt) => (
-                  <label key={opt.key} className="flex items-center gap-2 text-xs text-blue-900">
+                  <label key={opt.key} className="flex items-center gap-2 text-xs text-teal-900">
                     <input
                       type="checkbox"
                       checked={selectedExtraCols.includes(opt.key)}
@@ -319,27 +319,27 @@ export default function CitasPage() {
             ) : (
               <div className="max-h-[60vh] overflow-y-auto overflow-x-auto">
                 <table className="min-w-full text-sm">
-                  <thead className="bg-blue-50">
+                  <thead className="bg-teal-50">
                     <tr>
                       {columns.map((c) => (
-                        <th key={c.key} className="px-3 py-2 text-left text-blue-900 font-semibold border-b border-blue-200">
+                        <th key={c.key} className="px-3 py-2 text-left text-teal-900 font-semibold border-b border-teal-200">
                           {c.label}
                         </th>
                       ))}
-                      <th className="px-3 py-2 text-right text-blue-900 font-semibold border-b border-blue-200">Acciones</th>
+                      <th className="px-3 py-2 text-right text-teal-900 font-semibold border-b border-teal-200">Acciones</th>
                     </tr>
                   </thead>
                   <tbody>
                     {filtered.map((a) => (
-                      <tr key={a.id} className="border-t border-blue-200">
+                      <tr key={a.id} className="border-t border-teal-200">
                         {columns.map((c) => (
-                          <td key={c.key} className="px-3 py-2 text-blue-900">
+                          <td key={c.key} className="px-3 py-2 text-teal-900">
                             {c.value(a)}
                           </td>
                         ))}
                         <td className="px-3 py-2">
                           <div className="flex gap-2 justify-end">
-                            <button onClick={() => onConfirm(a.id)} disabled={busyId === a.id} className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-400">Confirmar</button>
+                            <button onClick={() => onConfirm(a.id)} disabled={busyId === a.id} className="px-3 py-1 bg-teal-600 text-white rounded hover:bg-teal-700 disabled:bg-gray-400">Confirmar</button>
                             <button onClick={() => onCancel(a.id)} disabled={busyId === a.id} className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 disabled:bg-gray-400">Cancelar</button>
                             <button onClick={() => setShowRescheduleId(a.id)} className="px-3 py-1 bg-amber-500 text-white rounded hover:bg-amber-600">Reprogramar</button>
                           </div>
@@ -363,10 +363,10 @@ export default function CitasPage() {
         {showCreate && (
           <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
             <div className="bg-white rounded-lg shadow-lg w-full max-w-2xl">
-              <div className="flex items-center justify-between px-6 py-4 border-b border-blue-200">
+              <div className="flex items-center justify-between px-6 py-4 border-b border-teal-200">
                 <div className="flex items-center gap-2">
-                  <Calendar className="w-5 h-5 text-blue-600" />
-                  <h3 className="font-semibold text-blue-800">Nueva Cita</h3>
+                  <Calendar className="w-5 h-5 text-teal-600" />
+                  <h3 className="font-semibold text-teal-800">Nueva Cita</h3>
                 </div>
                 <button onClick={() => setShowCreate(false)} className="p-2 hover:bg-gray-100 rounded">
                   <X className="w-5 h-5 text-gray-600" />
@@ -375,48 +375,48 @@ export default function CitasPage() {
               <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm text-gray-700 mb-2">Documento</label>
-                  <input value={form.documento} onChange={(e) => setForm({ ...form, documento: e.target.value })} className="w-full px-3 py-2 border text-blue-900 rounded" />
+                  <input value={form.documento} onChange={(e) => setForm({ ...form, documento: e.target.value })} className="w-full px-3 py-2 border text-teal-900 rounded" />
                 </div>
                 <div>
                   <label className="block text-sm text-gray-700 mb-2">Nombre</label>
-                  <input value={form.nombre} onChange={(e) => setForm({ ...form, nombre: e.target.value })} className="w-full px-3 py-2 border text-blue-900 rounded" />
+                  <input value={form.nombre} onChange={(e) => setForm({ ...form, nombre: e.target.value })} className="w-full px-3 py-2 border text-teal-900 rounded" />
                 </div>
                 <div>
                   <label className="block text-sm text-gray-700 mb-2">Teléfono</label>
-                  <input value={form.telefono} onChange={(e) => setForm({ ...form, telefono: e.target.value })} className="w-full px-3 py-2 border text-blue-900 rounded" />
+                  <input value={form.telefono} onChange={(e) => setForm({ ...form, telefono: e.target.value })} className="w-full px-3 py-2 border text-teal-900 rounded" />
                 </div>
                 <div>
                   <label className="block text-sm text-gray-700 mb-2">EPS</label>
-                  <input value={form.eps} onChange={(e) => setForm({ ...form, eps: e.target.value })} className="w-full px-3 py-2 border text-blue-900 rounded" />
+                  <input value={form.eps} onChange={(e) => setForm({ ...form, eps: e.target.value })} className="w-full px-3 py-2 border text-teal-900 rounded" />
                 </div>
                 <div>
                   <label className="block text-sm text-gray-700 mb-2">Fecha</label>
-                  <input type="date" value={form.fecha} onChange={(e) => setForm({ ...form, fecha: e.target.value })} className="w-full px-3 py-2 border text-blue-900 rounded" />
+                  <input type="date" value={form.fecha} onChange={(e) => setForm({ ...form, fecha: e.target.value })} className="w-full px-3 py-2 border text-teal-900 rounded" />
                 </div>
                 <div>
                   <label className="block text-sm text-gray-700 mb-2">Hora</label>
-                  <input type="time" value={form.hora} onChange={(e) => setForm({ ...form, hora: e.target.value })} className="w-full px-3 py-2 border text-blue-900 rounded" />
+                  <input type="time" value={form.hora} onChange={(e) => setForm({ ...form, hora: e.target.value })} className="w-full px-3 py-2 border text-teal-900 rounded" />
                 </div>
                 <div>
                   <label className="block text-sm text-gray-700 mb-2">Especialidad</label>
-                  <input value={form.especialidad} onChange={(e) => setForm({ ...form, especialidad: e.target.value })} className="w-full px-3 py-2 border text-blue-900 rounded" />
+                  <input value={form.especialidad} onChange={(e) => setForm({ ...form, especialidad: e.target.value })} className="w-full px-3 py-2 border text-teal-900 rounded" />
                 </div>
                 <div>
                   <label className="block text-sm text-gray-700 mb-2">Lugar</label>
-                  <input value={form.lugar} onChange={(e) => setForm({ ...form, lugar: e.target.value })} className="w-full px-3 py-2 border text-blue-900 rounded" />
+                  <input value={form.lugar} onChange={(e) => setForm({ ...form, lugar: e.target.value })} className="w-full px-3 py-2 border text-teal-900 rounded" />
                 </div>
                 <div className="md:col-span-2">
                   <label className="block text-sm text-gray-700 mb-2">Doctor</label>
-                  <input value={form.doctor} onChange={(e) => setForm({ ...form, doctor: e.target.value })} className="w-full px-3 py-2 border text-blue-900 rounded" />
+                  <input value={form.doctor} onChange={(e) => setForm({ ...form, doctor: e.target.value })} className="w-full px-3 py-2 border text-teal-900 rounded" />
                 </div>
                 <div className="md:col-span-2">
                   <label className="block text-sm text-gray-700 mb-2">Observaciones</label>
-                  <textarea value={form.observaciones} onChange={(e) => setForm({ ...form, observaciones: e.target.value })} className="w-full px-3 py-2 border text-blue-900 rounded" rows={3} />
+                  <textarea value={form.observaciones} onChange={(e) => setForm({ ...form, observaciones: e.target.value })} className="w-full px-3 py-2 border text-teal-900 rounded" rows={3} />
                 </div>
               </div>
               <div className="px-6 py-4 border-t flex justify-end gap-2">
                 <button onClick={() => setShowCreate(false)} className="px-4 py-2 border text-red-900 rounded">Cancelar</button>
-                <button onClick={onCreate} disabled={creating} className="px-4 py-2 bg-blue-600 text-blue-900 rounded hover:bg-blue-700 disabled:bg-gray-400">Crear</button>
+                <button onClick={onCreate} disabled={creating} className="px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-700 disabled:bg-gray-400">Crear</button>
               </div>
             </div>
           </div>
@@ -425,10 +425,10 @@ export default function CitasPage() {
         {showRescheduleId && (
           <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
             <div className="bg-white rounded-lg shadow-lg w-full max-w-md">
-              <div className="flex items-center justify-between px-6 py-4 border-b border-blue-200">
+              <div className="flex items-center justify-between px-6 py-4 border-b border-teal-200">
                 <div className="flex items-center gap-2">
                   <Edit className="w-5 h-5 text-amber-600" />
-                  <h3 className="font-semibold text-blue-800">Reprogramar</h3>
+                  <h3 className="font-semibold text-teal-800">Reprogramar</h3>
                 </div>
                 <button onClick={() => setShowRescheduleId(null)} className="p-2 hover:bg-gray-100 rounded">
                   <X className="w-5 h-5 text-gray-600" />
@@ -437,16 +437,16 @@ export default function CitasPage() {
               <div className="p-6 grid grid-cols-1 gap-4">
                 <div>
                   <label className="block text-sm text-gray-700 mb-2">Nueva Fecha</label>
-                  <input type="date" value={newFecha} onChange={(e) => setNewFecha(e.target.value)} className="w-full px-3 py-2 border text-blue-900 rounded" />
+                  <input type="date" value={newFecha} onChange={(e) => setNewFecha(e.target.value)} className="w-full px-3 py-2 border text-teal-900 rounded" />
                 </div>
                 <div>
                   <label className="block text-sm text-gray-700 mb-2">Nueva Hora</label>
-                  <input type="time" value={newHora} onChange={(e) => setNewHora(e.target.value)} className="w-full px-3 py-2 border text-blue-900 rounded" />
+                  <input type="time" value={newHora} onChange={(e) => setNewHora(e.target.value)} className="w-full px-3 py-2 border text-teal-900 rounded" />
                 </div>
               </div>
               <div className="px-6 py-4 border-t flex justify-end gap-2">
                 <button onClick={() => setShowRescheduleId(null)} className="px-4 py-2 border text-red-900 rounded">Cancelar</button>
-                <button onClick={onReschedule} disabled={updating} className="px-4 py-2 bg-amber-600 text-blue-900 rounded hover:bg-amber-700 disabled:bg-gray-400">Guardar</button>
+                <button onClick={onReschedule} disabled={updating} className="px-4 py-2 bg-amber-600 text-white rounded hover:bg-amber-700 disabled:bg-gray-400">Guardar</button>
               </div>
             </div>
           </div>

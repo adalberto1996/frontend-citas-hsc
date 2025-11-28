@@ -117,7 +117,7 @@ export default function UsuariosPage() {
         </div>
         <button
           onClick={() => setMostrarModal(true)}
-          className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          className="flex items-center gap-2 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors"
         >
           <Plus className="w-5 h-5" />
           Nuevo Usuario
@@ -134,7 +134,7 @@ export default function UsuariosPage() {
               placeholder="Buscar por nombre o usuario..."
               value={busqueda}
               onChange={(e) => setBusqueda(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-700 focus:border-transparent"
             />
           </div>
           <div>
@@ -144,7 +144,7 @@ export default function UsuariosPage() {
                 setPage(1);
                 setRoleFilter(e.target.value);
               }}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+              className="w-full px-3 py-2 bg-teal-50 text-teal-700 border border-teal-200 rounded-lg hover:bg-teal-100"
             >
               <option value="">Todos</option>
               <option value="admin">Admin</option>
@@ -194,7 +194,7 @@ export default function UsuariosPage() {
                 <tr key={usuario.id_usuario} className="hover:bg-gray-50">
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
-                      <div className="flex-shrink-0 h-10 w-10 bg-blue-600 rounded-full flex items-center justify-center">
+                      <div className="flex-shrink-0 h-10 w-10 bg-teal-600 rounded-full flex items-center justify-center">
                         <User className="h-6 w-6 text-white" />
                       </div>
                       <div className="ml-4">
@@ -212,7 +212,7 @@ export default function UsuariosPage() {
                       className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
                         usuario.rol === "ADMIN"
                           ? "bg-purple-100 text-purple-800"
-                          : "bg-blue-100 text-blue-800"
+                          : "bg-teal-100 text-teal-800"
                       }`}
                     >
                       {usuario.rol}
@@ -237,11 +237,11 @@ export default function UsuariosPage() {
                       : "Nunca"}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <button onClick={() => openEdit(usuario)} className="text-blue-600 hover:text-blue-900 mr-4">
-                      <Edit className="w-5 h-5" />
+                    <button onClick={() => openEdit(usuario)} className="bg-yellow-500 text-white hover:bg-yellow-600 rounded-full p-2 mr-2">
+                      <Edit className="w-4 h-4" />
                     </button>
-                    <button onClick={() => onDelete(usuario.id_usuario)} disabled={busyId === usuario.id_usuario} className="text-red-600 hover:text-red-900 disabled:opacity-50">
-                      <Trash2 className="w-5 h-5" />
+                    <button onClick={() => onDelete(usuario.id_usuario)} disabled={busyId === usuario.id_usuario} className="bg-red-600 text-white hover:bg-red-700 rounded-full p-2 disabled:opacity-50">
+                      <Trash2 className="w-4 h-4" />
                     </button>
                   </td>
                 </tr>
@@ -254,8 +254,8 @@ export default function UsuariosPage() {
       <div className="flex items-center justify-between mt-4">
         <div className="text-sm text-gray-600">Página {page} de {lastPage} • Total: {total}</div>
         <div className="flex gap-2">
-          <button onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page <= 1 || loading} className="px-3 py-1 border rounded disabled:opacity-50">Anterior</button>
-          <button onClick={() => setPage((p) => Math.min(lastPage, p + 1))} disabled={page >= lastPage || loading} className="px-3 py-1 border rounded disabled:opacity-50">Siguiente</button>
+          <button onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page <= 1 || loading} className="px-3 py-1 bg-teal-50 text-teal-700 border border-teal-200 rounded-full hover:bg-teal-100 disabled:opacity-50">Anterior</button>
+          <button onClick={() => setPage((p) => Math.min(lastPage, p + 1))} disabled={page >= lastPage || loading} className="px-3 py-1 bg-teal-50 text-teal-700 border border-teal-200 rounded-full hover:bg-teal-100 disabled:opacity-50">Siguiente</button>
         </div>
       </div>
 
@@ -263,8 +263,8 @@ export default function UsuariosPage() {
       <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="bg-white rounded-lg shadow-md p-6">
           <div className="flex items-center gap-4">
-            <div className="p-3 bg-blue-100 rounded-lg">
-              <Users className="w-6 h-6 text-blue-600" />
+            <div className="p-3 bg-teal-100 rounded-lg">
+              <Users className="w-6 h-6 text-teal-600" />
             </div>
             <div>
               <p className="text-sm text-gray-600">Total Usuarios</p>
@@ -307,10 +307,10 @@ export default function UsuariosPage() {
       {mostrarModal && (
         <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg shadow-lg w-full max-w-md">
-            <div className="flex items-center justify-between px-6 py-4 border-b border-blue-200">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-teal-200">
               <div className="flex items-center gap-2">
-                <Plus className="w-5 h-5 text-blue-600" />
-                <h3 className="font-semibold text-blue-800">Nuevo Usuario</h3>
+                <Plus className="w-5 h-5 text-teal-600" />
+                <h3 className="font-semibold text-teal-800">Nuevo Usuario</h3>
               </div>
               <button onClick={() => setMostrarModal(false)} className="p-2 hover:bg-gray-100 rounded">
                 <X className="w-5 h-5 text-gray-600" />
@@ -319,19 +319,19 @@ export default function UsuariosPage() {
             <div className="p-6 grid grid-cols-1 gap-4">
               <div>
                 <label className="block text-sm text-gray-700 mb-2">Nombre</label>
-                <input value={createForm.name} onChange={(e) => setCreateForm({ ...createForm, name: e.target.value })} className="w-full px-3 py-2 border text-blue-900 rounded" />
+                <input value={createForm.name} onChange={(e) => setCreateForm({ ...createForm, name: e.target.value })} className="w-full px-3 py-2 border text-teal-900 rounded" />
               </div>
               <div>
                 <label className="block text-sm text-gray-700 mb-2">Correo</label>
-                <input type="email" value={createForm.email} onChange={(e) => setCreateForm({ ...createForm, email: e.target.value })} className="w-full px-3 py-2 border text-blue-900 rounded" />
+                <input type="email" value={createForm.email} onChange={(e) => setCreateForm({ ...createForm, email: e.target.value })} className="w-full px-3 py-2 border text-teal-900 rounded" />
               </div>
               <div>
                 <label className="block text-sm text-gray-700 mb-2">Contraseña</label>
-                <input type="password" value={createForm.password} onChange={(e) => setCreateForm({ ...createForm, password: e.target.value })} className="w-full px-3 py-2 border text-blue-900 rounded" />
+                <input type="password" value={createForm.password} onChange={(e) => setCreateForm({ ...createForm, password: e.target.value })} className="w-full px-3 py-2 border text-teal-900 rounded" />
               </div>
               <div>
                 <label className="block text-sm text-gray-700 mb-2">Rol</label>
-                <select value={createForm.role} onChange={(e) => setCreateForm({ ...createForm, role: e.target.value })} className="w-full px-3 py-2 border text-blue-900 rounded">
+                <select value={createForm.role} onChange={(e) => setCreateForm({ ...createForm, role: e.target.value })} className="w-full px-3 py-2 border text-teal-900 rounded">
                   <option value="operador">Operador</option>
                   <option value="admin">Admin</option>
                 </select>
@@ -339,7 +339,7 @@ export default function UsuariosPage() {
             </div>
             <div className="px-6 py-4 border-t flex justify-end gap-2">
               <button onClick={() => setMostrarModal(false)} className="px-4 py-2 border rounded">Cancelar</button>
-              <button onClick={onCreate} disabled={creating} className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-400">Crear</button>
+              <button onClick={onCreate} disabled={creating} className="px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-700 disabled:bg-gray-400">Crear</button>
             </div>
           </div>
         </div>
@@ -348,10 +348,10 @@ export default function UsuariosPage() {
       {showEditId && (
         <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg shadow-lg w-full max-w-md">
-            <div className="flex items-center justify-between px-6 py-4 border-b border-blue-200">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-teal-200">
               <div className="flex items-center gap-2">
                 <Edit className="w-5 h-5 text-amber-600" />
-                <h3 className="font-semibold text-blue-800">Editar Usuario</h3>
+                <h3 className="font-semibold text-teal-800">Editar Usuario</h3>
               </div>
               <button onClick={() => setShowEditId(null)} className="p-2 hover:bg-gray-100 rounded">
                 <X className="w-5 h-5 text-gray-600" />
@@ -360,19 +360,19 @@ export default function UsuariosPage() {
             <div className="p-6 grid grid-cols-1 gap-4">
               <div>
                 <label className="block text-sm text-gray-700 mb-2">Nombre</label>
-                <input value={editForm.name} onChange={(e) => setEditForm({ ...editForm, name: e.target.value })} className="w-full px-3 py-2 border text-blue-900 rounded" />
+                <input value={editForm.name} onChange={(e) => setEditForm({ ...editForm, name: e.target.value })} className="w-full px-3 py-2 border text-teal-900 rounded" />
               </div>
               <div>
                 <label className="block text-sm text-gray-700 mb-2">Correo</label>
-                <input type="email" value={editForm.email} onChange={(e) => setEditForm({ ...editForm, email: e.target.value })} className="w-full px-3 py-2 border text-blue-900 rounded" />
+                <input type="email" value={editForm.email} onChange={(e) => setEditForm({ ...editForm, email: e.target.value })} className="w-full px-3 py-2 border text-teal-900 rounded" />
               </div>
               <div>
                 <label className="block text-sm text-gray-700 mb-2">Nueva Contraseña</label>
-                <input type="password" value={editForm.password || ""} onChange={(e) => setEditForm({ ...editForm, password: e.target.value })} className="w-full px-3 py-2 border text-blue-900 rounded" />
+                <input type="password" value={editForm.password || ""} onChange={(e) => setEditForm({ ...editForm, password: e.target.value })} className="w-full px-3 py-2 border text-teal-900 rounded" />
               </div>
               <div>
                 <label className="block text-sm text-gray-700 mb-2">Rol</label>
-                <select value={editForm.role} onChange={(e) => setEditForm({ ...editForm, role: e.target.value })} className="w-full px-3 py-2 border text-blue-900 rounded">
+                <select value={editForm.role} onChange={(e) => setEditForm({ ...editForm, role: e.target.value })} className="w-full px-3 py-2 border text-teal-900 rounded">
                   <option value="operador">Operador</option>
                   <option value="admin">Admin</option>
                 </select>

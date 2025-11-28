@@ -57,12 +57,12 @@ export default function ConsultaPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 py-8 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-teal-50 to-teal-100 py-8 px-4">
       <div className="max-w-2xl mx-auto">
         {/* Header */}
         <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
           <div className="flex items-center justify-center mb-4">
-            <div className="bg-blue-600 p-3 rounded-full">
+            <div className="bg-teal-600 p-3 rounded-full">
               <Calendar className="w-8 h-8 text-white" />
             </div>
           </div>
@@ -86,12 +86,12 @@ export default function ConsultaPage() {
               onChange={(e) => setDocumento(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder="Ej: 1234567890"
-              className="flex-1 px-4 py-3 border text-black border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-lg"
+              className="flex-1 px-4 py-3 border text-black border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-700 text-lg"
             />
             <button
               onClick={buscarCita}
               disabled={loading}
-              className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center gap-2"
+              className="bg-teal-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-teal-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center gap-2"
             >
               {loading ? (
                 <>
@@ -135,7 +135,7 @@ export default function ConsultaPage() {
             <div className="p-6 space-y-4">
               {/* Paciente */}
               <div className="flex items-start gap-4 p-4 bg-gray-50 rounded-lg">
-                <User className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
+                <User className="w-6 h-6 text-teal-600 flex-shrink-0 mt-1" />
                 <div className="flex-1">
                   <p className="text-sm text-gray-600 mb-1">Paciente</p>
                   <p className="text-lg font-semibold text-gray-800">
@@ -147,7 +147,7 @@ export default function ConsultaPage() {
 
               {/* Fecha */}
               <div className="flex items-start gap-4 p-4 bg-gray-50 rounded-lg">
-                <Calendar className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
+                <Calendar className="w-6 h-6 text-teal-600 flex-shrink-0 mt-1" />
                 <div className="flex-1">
                   <p className="text-sm text-gray-600 mb-1">Fecha</p>
                   <p className="text-lg font-semibold text-gray-800 capitalize">
@@ -158,7 +158,7 @@ export default function ConsultaPage() {
 
               {/* Hora */}
               <div className="flex items-start gap-4 p-4 bg-gray-50 rounded-lg">
-                <Clock className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
+                <Clock className="w-6 h-6 text-teal-600 flex-shrink-0 mt-1" />
                 <div className="flex-1">
                   <p className="text-sm text-gray-600 mb-1">Hora</p>
                   <p className="text-lg font-semibold text-gray-800">
@@ -169,7 +169,7 @@ export default function ConsultaPage() {
 
               {/* Especialidad */}
               <div className="flex items-start gap-4 p-4 bg-gray-50 rounded-lg">
-                <User className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
+                <User className="w-6 h-6 text-teal-600 flex-shrink-0 mt-1" />
                 <div className="flex-1">
                   <p className="text-sm text-gray-600 mb-1">Especialidad</p>
                   <p className="text-lg font-semibold text-gray-800">
@@ -185,7 +185,7 @@ export default function ConsultaPage() {
 
               {/* Lugar */}
               <div className="flex items-start gap-4 p-4 bg-gray-50 rounded-lg">
-                <MapPin className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
+                <MapPin className="w-6 h-6 text-teal-600 flex-shrink-0 mt-1" />
                 <div className="flex-1">
                   <p className="text-sm text-gray-600 mb-1">Lugar</p>
                   <p className="text-lg font-semibold text-gray-800">
@@ -201,11 +201,11 @@ export default function ConsultaPage() {
 
               {/* Observaciones */}
               {cita.observaciones && (
-                <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                  <p className="text-sm font-semibold text-blue-800 mb-1">
+                <div className="p-4 bg-teal-50 border border-teal-200 rounded-lg">
+                  <p className="text-sm font-semibold text-teal-800 mb-1">
                     Observaciones:
                   </p>
-                  <p className="text-sm text-blue-700">{cita.observaciones}</p>
+                  <p className="text-sm text-teal-700">{cita.observaciones}</p>
                 </div>
               )}
             </div>
@@ -225,17 +225,17 @@ export default function ConsultaPage() {
           </h3>
           <ul className="space-y-2 text-sm text-gray-600">
             <li className="flex items-start gap-2">
-              <span className="text-blue-600 font-bold">•</span>
+              <span className="text-teal-600 font-bold">•</span>
               <span>Las citas se actualizan en el transcurso del día</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-blue-600 font-bold">•</span>
+              <span className="text-teal-600 font-bold">•</span>
               <span>
                 Si no encuentras tu cita, por favor comunícate con nosotros
               </span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-blue-600 font-bold">•</span>
+              <span className="text-teal-600 font-bold">•</span>
               <span>
                 Recuerda llevar tu documento de identidad y carnet de EPS
               </span>
