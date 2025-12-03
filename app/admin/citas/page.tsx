@@ -9,6 +9,7 @@ import {
   confirmAppointment,
   cancelAppointment,
   rescheduleAppointment,
+  getAvailabilityBySpecialty,
 } from "@/libs/api";
 
 type AppointmentItem = {
@@ -71,6 +72,10 @@ export default function CitasPage() {
   const [perPage, setPerPage] = useState<number>(10);
   const [selectedExtraCols, setSelectedExtraCols] = useState<string[]>([]);
   const [busyId, setBusyId] = useState<number | null>(null);
+  const [availability, setAvailability] = useState<any[]>([]);
+  const [availabilityLoading, setAvailabilityLoading] = useState(false);
+  const [availabilityReschedule, setAvailabilityReschedule] = useState<any[]>([]);
+  const [availabilityRescheduleLoading, setAvailabilityRescheduleLoading] = useState(false);
 
   const cargar = async () => {
     setLoading(true);
@@ -135,6 +140,44 @@ export default function CitasPage() {
     const h = setTimeout(() => setDebouncedQuery(busqueda), 200);
     return () => clearTimeout(h);
   }, [busqueda]);
+
+  useEffect(() => {
+    const fetchAvailability = async () => {
+      if (!form.especialidad || !form.fecha) {
+        setAvailability([]);
+        return;
+      }
+      setAvailabilityLoading(true);
+      try {
+        const resp = await getAvailabilityBySpecialty({ specialty: form.especialidad, date: form.fecha, per_page: 50 });
+        const data = (resp as any)?.data ?? [];
+        setAvailability(Array.isArray(data) ? data : []);
+      } finally {
+        setAvailabilityLoading(false);
+      }
+    };
+    fetchAvailability();
+  }, [form.especialidad, form.fecha]);
+
+  useEffect(() => {
+    const fetchAvailabilityReschedule = async () => {
+      const current = items.find((a) => a.id === showRescheduleId);
+      const specialty = current?.especialidad;
+      if (!specialty || !newFecha) {
+        setAvailabilityReschedule([]);
+        return;
+      }
+      setAvailabilityRescheduleLoading(true);
+      try {
+        const resp = await getAvailabilityBySpecialty({ specialty, date: newFecha, per_page: 50 });
+        const data = (resp as any)?.data ?? [];
+        setAvailabilityReschedule(Array.isArray(data) ? data : []);
+      } finally {
+        setAvailabilityRescheduleLoading(false);
+      }
+    };
+    fetchAvailabilityReschedule();
+  }, [showRescheduleId, newFecha, items]);
 
   const filtered = useMemo(() => {
     const q = debouncedQuery.toLowerCase().trim();
@@ -396,6 +439,31 @@ export default function CitasPage() {
                 <div>
                   <label className="block text-sm text-gray-700 mb-2">Hora</label>
                   <input type="time" value={form.hora} onChange={(e) => setForm({ ...form, hora: e.target.value })} className="w-full px-3 py-2 border text-teal-900 rounded" />
+                  {availabilityLoading ? (
+                    <p className="text-sm text-gray-500 mt-2">Cargando disponibilidad...</p>
+                  ) : (
+                    availability.length > 0 && (
+                      <div className="mt-2">
+                        <p className="text-xs text-gray-600 mb-2">Disponibles:</p>
+                        <div className="flex flex-wrap gap-2">
+                          {availability.map((slot, idx) => {
+                            const label = slot.hora ?? slot.hora_inicio ?? slot.time ?? slot.inicio ?? slot.start_time ?? "";
+                            const display = String(label).slice(0, 5);
+                            return (
+                              <button
+                                key={idx}
+                                type="button"
+                                onClick={() => setForm({ ...form, hora: display })}
+                                className="px-2 py-1 text-sm bg-teal-50 text-teal-900 border border-teal-200 rounded hover:bg-teal-100"
+                              >
+                                {display}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )
+                  )}
                 </div>
                 <div>
                   <label className="block text-sm text-gray-700 mb-2">Especialidad</label>
@@ -442,6 +510,31 @@ export default function CitasPage() {
                 <div>
                   <label className="block text-sm text-gray-700 mb-2">Nueva Hora</label>
                   <input type="time" value={newHora} onChange={(e) => setNewHora(e.target.value)} className="w-full px-3 py-2 border text-teal-900 rounded" />
+                  {availabilityRescheduleLoading ? (
+                    <p className="text-sm text-gray-500 mt-2">Cargando disponibilidad...</p>
+                  ) : (
+                    availabilityReschedule.length > 0 && (
+                      <div className="mt-2">
+                        <p className="text-xs text-gray-600 mb-2">Disponibles:</p>
+                        <div className="flex flex-wrap gap-2">
+                          {availabilityReschedule.map((slot, idx) => {
+                            const label = slot.hora ?? slot.hora_inicio ?? slot.time ?? slot.inicio ?? slot.start_time ?? "";
+                            const display = String(label).slice(0, 5);
+                            return (
+                              <button
+                                key={idx}
+                                type="button"
+                                onClick={() => setNewHora(display)}
+                                className="px-2 py-1 text-sm bg-teal-50 text-teal-900 border border-teal-200 rounded hover:bg-teal-100"
+                              >
+                                {display}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )
+                  )}
                 </div>
               </div>
               <div className="px-6 py-4 border-t flex justify-end gap-2">

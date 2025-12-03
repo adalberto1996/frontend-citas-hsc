@@ -239,4 +239,9 @@ export const checkHealth = async () => {
   return response.data;
 };
 
+export const getAvailabilityBySpecialty = async (params?: Record<string, unknown>) => {
+  const response = await api.get("/backoffice/availability/by-specialty", { params });
+  return response.data;
+};
+
 export default api;
